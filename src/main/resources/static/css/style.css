@@ -1,0 +1,10 @@
+.navbar-brand {
+    font-size: 30px; /* Ajuste o tamanho da fonte conforme necessário */
+}
+
+.introduction {
+	    margin-left: 30vw;  /* 5% da largura da viewport */
+    margin-right: 30vw; /* 5% da largura da viewport */
+    margin-top: 2vw;
+}
+
