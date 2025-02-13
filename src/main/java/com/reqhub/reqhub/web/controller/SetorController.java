@@ -5,16 +5,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/setor")
+@RequestMapping("/setores")
 public class SetorController {
 
-	@GetMapping("/cadastrar")
-	public String cadastro() {
-		return "/setor/cadastro";
-	}
-	
-	@GetMapping("/listar")
-	public String listar() {
-		return "/setor/lista";
-	}
+@GetMapping("/cadastrar") 
+public String cadastrar() {
+	return "setor/cadastro";
+}
+
 }

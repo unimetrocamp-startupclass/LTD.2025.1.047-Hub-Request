@@ -1,0 +1,38 @@
+html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    background-color: #f8f9fa;
+}
+
+.container {
+    flex-grow: 1;
+}
+
+.form-container {
+    background: whit;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+footer {
+    background-color: #343a40;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: auto; /* Isso garante que o footer sempre vá para o fundo */
+}
+
+.btn-custom {
+    font-size: 1.2rem;
+    padding: 12px;
+    width: 100%;
+    background-color: #1A2E35;
+}
+
+
+   

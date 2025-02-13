@@ -19,28 +19,23 @@
 </header>
 
 <body>
-  <!-- Formulário -->
-  <div class="container mt-5">
-    <div class="d-flex justify-content-center mb-4">
-      <h2>Cadastro do Setor</h2>
-    </div>
+ <div class="container mt-5">
+    <h2>Buscar Feedback</h2>
 
-    <div class="form-container">
-      <form th:action="@{/user/salvar}" method="post" th:object="${usuario}"> <!-- tem q adicionar algo parecido com isso  <form id="formCriar"> -->
+    <!-- Formulário de Busca -->
+    <form id="buscarFeedbackForm" onsubmit="buscarFeedback(event)">
         <div class="mb-3">
-          <label for="nome" class="form-label">Nome:</label>
-          <input type="text" id="nome" name="nome" class="form-control" required>
+            <label for="busca" class="form-label">Buscar por ID ou Nome:</label>
+            <input type="text" id="busca" name="busca" class="form-control" placeholder="Digite o ID ou Nome" required>
         </div>
 
-        <div class="mb-3">
-          <label for="descricao" class="form-label">Descrição:</label>
-          <input type="text" id="coment" name="comentarip" class="form-control" required>
-        </div>
+        <button type="submit" class="btn btn-primary">Buscar</button>
+    </form>
 
-        <button type="submit" class="btn btn-primary btn-custom">Cadastrar</button>
-      </form>
-    </div>
-  </div>
+    <!-- Área para mostrar o resultado da busca -->
+    <div id="resultadoFeedback" class="mt-4"></div>
+</div>
+
  
   <!-- Rodapé -->
   <footer class="bg-dark text-white text-center py-3">
