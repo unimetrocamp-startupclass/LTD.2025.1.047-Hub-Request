@@ -2,6 +2,7 @@ package com.reqhub.reqhub.domain;
 
 import jakarta.persistence.*;
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name = "SETORES")
 public class Setor extends AbstractEntity<Long>{
