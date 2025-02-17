@@ -2,5 +2,6 @@ package com.reqhub.reqhub.domain;
 
 public enum StatusOrdem {
     PENDENTE, 
-    CONCLUIDO
+    CONCLUIDO,
+    NAO_ATENDIDO
 }

@@ -10,24 +10,30 @@ public class Ordem extends AbstractEntity<Long> {
 
     @ManyToOne
     @JoinColumn(name = "usuario_id", nullable = false)
-    private User usuario; // Quem abriu a ordem
+    private Usuario usuario; // Quem abriu a ordem
 
     @Column(nullable = false)
     private String descricao; // Comentário ou feedback
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private StatusOrdem status = StatusOrdem.PENDENTE; // Padrão: PENDENTE
+    private StatusOrdem status; // Agora será inicializado no construtor
 
     @Column(nullable = false, updatable = false)
-    private LocalDateTime dataCriacao = LocalDateTime.now(); // Data automática
+    private LocalDateTime dataCriacao;
+
+    // Construtor para inicializar os valores padrão
+    public Ordem() {
+        this.dataCriacao = LocalDateTime.now();
+        this.status = StatusOrdem.PENDENTE; // Padrão definido no construtor
+    }
 
     // Getters e Setters
-    public User getUsuario() {
+    public Usuario getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(User usuario) {
+    public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
 
