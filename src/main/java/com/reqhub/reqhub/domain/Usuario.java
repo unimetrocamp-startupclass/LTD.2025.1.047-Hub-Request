@@ -23,7 +23,9 @@ public class Usuario extends AbstractEntity<Long> {
     @Enumerated(EnumType.STRING) // Salva no banco como texto (ex: "ADMIN" ou "COMUM")
     @Column(nullable = false, length = 10)
     private TipoUsuario tipoUser;
-
+    
+    @Column( nullable = true, length = 10 )
+    private String senha;  // Apenas para admin
     // Construtor padrão
     public Usuario() {}
 
@@ -66,5 +68,13 @@ public class Usuario extends AbstractEntity<Long> {
 
     public void setTipoUser(TipoUsuario tipoUser) {
         this.tipoUser = tipoUser;
+    }
+    
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 }

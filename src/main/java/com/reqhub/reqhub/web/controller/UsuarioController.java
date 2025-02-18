@@ -5,12 +5,16 @@ import com.reqhub.reqhub.domain.TipoUsuario;
 import com.reqhub.reqhub.domain.Usuario;
 import com.reqhub.reqhub.service.SetorService;
 import com.reqhub.reqhub.service.UsuarioService;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.Model;
 
 @Controller
 @RequestMapping("/users")
@@ -22,29 +26,27 @@ public class UsuarioController {
     @Autowired
     private SetorService setorService;
 
+    // Página de cadastro de usuário
     @GetMapping("/cadastrar")
-    public String cadastrar() {
-        return "user/cadastro";  // Página de cadastro de usuário
+    public String cadastrar(Model model) {
+        // Carregar todos os setores do banco de dados
+        List<Setor> setores = setorService.buscarTodosSetores();
+        model.addAttribute("setores", setores); // Adicionar a lista de setores ao modelo
+        return "user/cadastro";  // A página de cadastro de usuário
     }
 
+    // Cadastro de usuário
     @PostMapping("/cadastrar")
-    public String cadastrarUsuario(@RequestParam("nome") String nome, @RequestParam("email") String email,
-                                   @RequestParam("ramal") String ramal, @RequestParam("setorNome") String setorNome,
-                                   @RequestParam("tipoUser") String tipoUser) {
-        Setor setor = (Setor) setorService.buscarSetorPorNome(setorNome);  // Busca o setor pelo nome
-        if (setor != null) {
-            // Converte a String para o Enum TipoUsuario
-            TipoUsuario tipo = TipoUsuario.valueOf(tipoUser.toUpperCase());  // Converte para o enum
+    public String cadastrarUsuario(@RequestBody Usuario usuario) {
+        // Busca o setor pelo nome do usuário
+        Setor setor = usuario.getSetor(); // O setor já está no objeto Usuario
 
-            Usuario usuario = new Usuario();
-            usuario.setNome(nome);
-            usuario.setEmail(email);
-            usuario.setRamal(ramal);
-            usuario.setSetor(setor);
-            usuario.setTipoUser(tipo);  // Agora setando o tipoUser como o tipo enum
-            usuarioService.salvarUsuario(usuario);  // Salva o usuário usando o service
-            return "redirect:/feedback/cadastrar";  // Redireciona para cadastro de feedback
+        if (setor != null) {
+            // Salva o usuário
+            usuarioService.salvarUsuario(usuario);  
+            return "redirect:/feedback/cadastrar";  // Redireciona para a página de cadastro de feedback
         }
-        return "redirect:/users/cadastrar";  // Se o setor não for encontrado, volta para a página de cadastro
+
+        return "redirect:/users/cadastrar";  // Caso o setor não exista, redireciona para a página de cadastro
     }
 }

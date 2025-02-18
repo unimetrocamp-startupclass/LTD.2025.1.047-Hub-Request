@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-   <link rel="icon" href="/img/icon.png" type="image/x-icon">
-    <title>Login - ReqHub</title>
-        <link rel="stylesheet" href="/css/login.css" />
+    <link rel="icon" href="/img/icon.png" type="image/x-icon">
+    <title>Cadastro - Admin - ReqHub</title>
+    
 </head>
 
 <header>
@@ -15,21 +15,18 @@
       <img src="/img/icon.png" width="50" height="50" class="d-inline-block align-top" alt="">
       ReqHub
     </a>
-    <div class="ml-auto">
-      <a th:href="@{/admins/cadastro}" class="navbar-brand">Criar Conta</a>
-    </div>
   </nav>
 </header>
 
 <body>
-  <!-- Formulário de Login -->
+  <!-- Formulário de Cadastro -->
   <div class="container mt-5">
     <div class="d-flex justify-content-center mb-4">
-      <h2>Login de Admin</h2>
+      <h2>Cadastro de Admin</h2>
     </div>
 
     <div class="form-container">
-      <form action="/admin/login" method="post">
+      <form action="/users/admin/cadastrar" method="post">
         <div class="mb-3">
           <label for="nome" class="form-label">Nome:</label>
           <input type="text" id="nome" name="nome" class="form-control" required>
@@ -40,7 +37,12 @@
           <input type="password" id="senha" name="senha" class="form-control" required>
         </div>
 
-        <button type="submit" class="btn btn-primary btn-custom">Entrar</button>
+        <div class="mb-3">
+          <label for="codigo" class="form-label">Código de Acesso:</label>
+          <input type="text" id="codigo" name="codigo" class="form-control" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-custom">Cadastrar</button>
       </form>
     </div>
   </div>

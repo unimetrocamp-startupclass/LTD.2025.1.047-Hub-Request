@@ -6,18 +6,34 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
 
-@Service  // <-- ESSENCIAL para que o Spring gerencie essa classe!
+@Service
 public class UsuarioService {
+
+    private static final String CODIGO_ADMIN = "NcT127@"; // Código secreto para criar admin
 
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    public void salvarUsuario(Usuario usuario) {
-        usuarioRepository.save(usuario);  // Salva o usuário no banco
+    public void salvarUsuario(Usuario usuario, String codigoAdmin) {
+        // Se o usuário for ADMIN, precisa do código correto
+        if (usuario.getTipoUser().toString().equals("ADMIN") && !CODIGO_ADMIN.equals(codigoAdmin)) {
+            throw new RuntimeException("Código de admin inválido!");
+        }
+
+        usuarioRepository.save(usuario);
     }
 
     public Usuario buscarUsuarioPorId(Long usuarioId) {
         Optional<Usuario> usuario = usuarioRepository.findById(usuarioId);
-        return usuario.orElse(null);  // Retorna o usuário ou null se não encontrar
+        return usuario.orElse(null);
     }
+
+    public Optional<Usuario> buscarPorEmail(String email) {
+        return usuarioRepository.findByEmail(email);
+    }
+
+	public void salvarUsuario(Usuario usuario) {
+		// TODO Auto-generated method stub
+		
+	}
 }

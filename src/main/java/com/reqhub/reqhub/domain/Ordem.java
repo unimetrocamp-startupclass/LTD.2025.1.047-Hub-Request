@@ -49,8 +49,8 @@ public class Ordem extends AbstractEntity<Long> {
         return status;
     }
 
-    public void setStatus(StatusOrdem status) {
-        this.status = status;
+    public void setStatus(StatusOrdem pendente) {
+        this.status = pendente;
     }
 
     public LocalDateTime getDataCriacao() {
