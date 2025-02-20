@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,8 +37,8 @@ public class SetorController {
 
     // Método para cadastrar um novo setor
     @PostMapping("/cadastrar")
-    public String cadastrarSetor(@RequestBody Setor setor) {
-    	setorService.salvarSetor(setor);  // Salva o setor no banco de dados
-        return "redirect:/setores/listar";  
-        }
+    public String cadastrarSetor(@ModelAttribute Setor setor) {
+        setorService.salvarSetor(setor);
+        return "redirect:/";
+    }
 }
