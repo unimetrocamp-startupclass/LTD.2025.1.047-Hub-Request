@@ -5,16 +5,15 @@ import com.reqhub.reqhub.domain.TipoUsuario;
 import com.reqhub.reqhub.domain.Usuario;
 import com.reqhub.reqhub.service.SetorService;
 import com.reqhub.reqhub.service.UsuarioService;
-
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.ui.Model;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/users")
@@ -26,27 +25,24 @@ public class UsuarioController {
     @Autowired
     private SetorService setorService;
 
-    // Página de cadastro de usuário
     @GetMapping("/cadastrar")
     public String cadastrar(Model model) {
-        // Carregar todos os setores do banco de dados
         List<Setor> setores = setorService.buscarTodosSetores();
-        model.addAttribute("setores", setores); // Adicionar a lista de setores ao modelo
-        return "user/cadastro";  // A página de cadastro de usuário
+        model.addAttribute("setores", setores);
+        model.addAttribute("usuario", new Usuario());
+        return "user/cadastro"; // Ajuste para "user/cadastrar" se o HTML for "cadastrar.html"
     }
 
-    // Cadastro de usuário
     @PostMapping("/cadastrar")
     public String cadastrarUsuario(@RequestBody Usuario usuario) {
-        // Busca o setor pelo nome do usuário
-        Setor setor = usuario.getSetor(); // O setor já está no objeto Usuario
-
-        if (setor != null) {
-            // Salva o usuário
-            usuarioService.salvarUsuario(usuario);  
-            return "redirect:/feedback/cadastrar";  // Redireciona para a página de cadastro de feedback
+        if (usuario.getSetor() != null && usuario.getSetor().getId() != null) {
+            // Garante que tipoUser seja definido (não nulo)
+            if (usuario.getTipoUser() == null) {
+                usuario.setTipoUser(TipoUsuario.COMUM);
+            }
+            usuarioService.salvarUsuario(usuario); // JPA mapeia o setor pelo ID
+            return "redirect:/ordens/comentario";
         }
-
-        return "redirect:/users/cadastrar";  // Caso o setor não exista, redireciona para a página de cadastro
+        return "redirect:/users/cadastrar";
     }
 }

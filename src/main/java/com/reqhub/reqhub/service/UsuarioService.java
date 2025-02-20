@@ -4,6 +4,8 @@ import com.reqhub.reqhub.domain.Usuario;
 import com.reqhub.reqhub.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.Optional;
 
 @Service
@@ -14,12 +16,18 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    @Transactional
     public void salvarUsuario(Usuario usuario, String codigoAdmin) {
         // Se o usuário for ADMIN, precisa do código correto
-        if (usuario.getTipoUser().toString().equals("ADMIN") && !CODIGO_ADMIN.equals(codigoAdmin)) {
+        if ("ADMIN".equals(usuario.getTipoUser().toString()) && !CODIGO_ADMIN.equals(codigoAdmin)) {
             throw new RuntimeException("Código de admin inválido!");
         }
+        usuarioRepository.save(usuario);
+    }
 
+    @Transactional
+    public void salvarUsuario(Usuario usuario) {
+        // Para usuários normais, salva diretamente
         usuarioRepository.save(usuario);
     }
 
@@ -31,9 +39,4 @@ public class UsuarioService {
     public Optional<Usuario> buscarPorEmail(String email) {
         return usuarioRepository.findByEmail(email);
     }
-
-	public void salvarUsuario(Usuario usuario) {
-		// TODO Auto-generated method stub
-		
-	}
 }

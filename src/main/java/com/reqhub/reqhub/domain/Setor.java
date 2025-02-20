@@ -10,24 +10,12 @@ public class Setor extends AbstractEntity<Long> {
     @Column(name = "nome", nullable = false, unique = true, length = 60)
     private String nome;
 
-    // Construtor padrão
     public Setor() {}
 
-    // Construtor com parâmetro
     public Setor(String nome) {
-        this.nome = nome.trim(); // Removendo espaços extras
+        this.nome = nome.trim();
     }
 
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = (nome != null) ? nome.trim() : null;
-    }
-
-    @Override
-    public String toString() {
-        return "Setor{id=" + getId() + ", nome='" + nome + "'}";
-    }
+    public String getNome() { return nome; }
+    public void setNome(String nome) { this.nome = (nome != null) ? nome.trim() : null; }
 }

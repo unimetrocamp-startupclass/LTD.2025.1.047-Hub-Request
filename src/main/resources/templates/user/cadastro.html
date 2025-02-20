@@ -5,12 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
-     <link rel="icon" href="/img/icon.png" type="image/x-icon">
+    <link rel="icon" href="/img/icon.png" type="image/x-icon">
     <title>ReqHub</title>
-   
     <link rel="stylesheet" href="/css/cadastrar.css" />
 </head>
-
 <header>
   <nav class="navbar navbar-dark bg-dark">
     <a class="navbar-brand" href="/">
@@ -18,59 +16,78 @@
       ReqHub
     </a>
     <div class="ml-auto">
-    <a href="#" class="navbar-brand">
-      <img src="/img/iconadmin.png" width="40" height="40" class="d-inline-block align-top" alt="Icon Direita">
-      <span class="ml-2"  style="font-size: 20px;">Admin</span>  <!-- Adicionando o texto ao lado da imagem -->
-    </a>
-  </div>
-  
+      <a href="#" class="navbar-brand">
+        <img src="/img/iconadmin.png" width="40" height="40" class="d-inline-block align-top" alt="Icon Direita">
+        <span class="ml-2" style="font-size: 20px;">Admin</span>
+      </a>
+    </div>
   </nav>
 </header>
-
 <body>
-  <!-- Formulário -->
   <div class="container mt-5">
     <div class="d-flex justify-content-center mb-4">
       <h2>Cadastro de Usuário</h2>
     </div>
-
     <div class="form-container">
-      <form th:action="@{/user/cadastrar}" method="post" th:object="${usuario}">
+      <form id="cadastroForm" th:action="@{/users/cadastrar}" method="post" th:object="${usuario}">
         <div class="mb-3">
           <label for="nome" class="form-label">Nome:</label>
           <input type="text" id="nome" name="nome" class="form-control" required>
         </div>
-
         <div class="mb-3">
           <label for="email" class="form-label">Email:</label>
           <input type="email" id="email" name="email" class="form-control" required>
         </div>
-
         <div class="mb-3">
-          <label for="rma" class="form-label">Ramal:</label>
-          <input type="text" id="rma" name="rma" class="form-control" required>
+          <label for="ramal" class="form-label">Ramal:</label>
+          <input type="text" id="ramal" name="ramal" class="form-control" required>
         </div>
-
-     <div class="mb-3">
-    <label for="setor" class="form-label">Setor:</label>
-    <select id="setor" name="setor" class="form-select" required>
-        <option value="">Selecione o Setor</option>
-        <!-- Preencher dinamicamente com os setores -->
-        <option th:each="setor : ${setores}" th:value="${setor.id}" th:text="${setor.nome}">Selecione o Setor</option>
-    </select>
-</div>
-
+        <div class="mb-3">
+          <label for="setor" class="form-label">Setor:</label>
+          <select id="setor" name="setor" class="form-select" required>
+            <option value="">Selecione o Setor</option>
+            <option th:each="setor : ${setores}" th:value="${setor.id}" th:text="${setor.nome}"></option>
+          </select>
+        </div>
         <button type="submit" class="btn btn-primary btn-custom">Cadastrar</button>
       </form>
     </div>
   </div>
- <a href="/setor/cadastrar" class="arrow-down">
-        <i class="fas fa-arrow-down"></i>
-    </a>
-  <!-- Rodapé -->
+  <script>
+    document.getElementById('cadastroForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const data = {
+        nome: document.getElementById('nome').value,
+        email: document.getElementById('email').value,
+        ramal: document.getElementById('ramal').value,
+        setor: { id: document.getElementById('setor').value }, // Envia o ID do setor como objeto
+        tipoUser: "COMUM" // Valor padrão para tipoUser
+      };
+      fetch('/users/cadastrar', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+      .then(response => {
+        if (response.ok) {
+          window.location.href = '/ordens/comentario';
+        } else {
+          throw new Error('Erro ao cadastrar');
+        }
+      })
+      .catch(error => {
+        console.error('Erro:', error);
+        alert('Falha ao cadastrar o usuário');
+      });
+    });
+  </script>
+  <a href="/setor/cadastrar" class="arrow-down">
+    <i class="fas fa-arrow-down"></i>
+  </a>
   <footer class="bg-dark text-white text-center py-3">
-    <p>&copy; 2025 ReqHub. Todos os direitos reservados.</p>
+    <p>© 2025 ReqHub. Todos os direitos reservados.</p>
   </footer>
-
 </body>
 </html>
