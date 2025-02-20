@@ -1,79 +1,64 @@
 package com.reqhub.reqhub.web.controller;
 
-import java.util.List;
-import org.springframework.ui.Model;
-
+import com.reqhub.reqhub.domain.Ordem;
+import com.reqhub.reqhub.service.OrdemService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttribute;
-
-import com.reqhub.reqhub.domain.Ordem;
-import com.reqhub.reqhub.domain.StatusOrdem;
-import com.reqhub.reqhub.domain.TipoUsuario;
-import com.reqhub.reqhub.domain.Usuario;
-import com.reqhub.reqhub.service.OrdemService;
-import com.reqhub.reqhub.service.UsuarioService;
-
-
+import org.springframework.http.ResponseEntity;
 
 @Controller
 @RequestMapping("/ordens")
 public class OrdemController {
 
+    private static final Logger logger = LoggerFactory.getLogger(OrdemController.class);
+
     @Autowired
     private OrdemService ordemService;
 
-    @Autowired
-    private UsuarioService usuarioService;
-
     @GetMapping("/comentario")
-	public String comentario() {
-		return "ordem/comentario";
-	}
-	
-	@GetMapping("/buscar")
-	public String buscar() {
-		return "ordem/buscar";
-	}
-    @PostMapping("/cadastrar")
-    public String cadastrarOrdem(@RequestParam("usuarioId") Long usuarioId, @RequestParam("descricao") String descricao) {
-        // Buscar o usuário pelo ID
-        Usuario usuario = usuarioService.buscarUsuarioPorId(usuarioId);
-        if (usuario != null) {
+    public String comentario(Model model) {
+        logger.info("Acessando página de cadastro de ordem em /ordens/comentario");
+        model.addAttribute("ordem", new Ordem());
+        return "ordem/comentario"; // Aponta para ordem/comentario.html
+    }
+
+    @PostMapping("/comentario")
+    public ResponseEntity<String> cadastrarOrdem(@RequestBody OrdemRequest ordemRequest) {
+        logger.info("Recebido POST para /ordens/comentario: {}", ordemRequest);
+        try {
             Ordem ordem = new Ordem();
-            ordem.setUsuario(usuario);  // Associando o usuário
-            ordem.setDescricao(descricao);  // A descrição do feedback
-            ordem.setStatus(StatusOrdem.PENDENTE);  // Status padrão como "PENDENTE"
-            ordemService.salvarOrdem(ordem);  // Salva a ordem
-            return "redirect:/feedback/listar";  // Redireciona para página de listar feedbacks
+            ordem.setAssunto(ordemRequest.getAssunto());
+            ordem.setDescricao(ordemRequest.getDescricao());
+            ordemService.salvarOrdem(ordem, ordemRequest.getNomeUsuario());
+            logger.info("Ordem salva com sucesso, ID: {}", ordem.getId());
+            return ResponseEntity.ok(ordem.getId().toString());
+        } catch (Exception e) {
+            logger.error("Erro ao salvar ordem: {}", e.getMessage(), e);
+            return ResponseEntity.status(500).body("Erro ao salvar: " + e.getMessage());
         }
-        return "redirect:/feedback/cadastrar";  // Caso o usuário não exista, volta para o cadastro
-    }
-    
-    @GetMapping("/listar")
-    public String listarFeedbacks(@SessionAttribute(name = "usuario", required = false) Usuario usuario, Model model) {
-        if (usuario == null || !usuario.getTipoUser().equals(TipoUsuario.ADMIN)) {
-            return "redirect:/admin/login";  // Redireciona se não for admin ou se não estiver logado
-        }
-        
-        List<Ordem> feedbacks = ordemService.listarTodosFeedbacks();  // Buscar todos os feedbacks
-        model.addAttribute("feedbacks", feedbacks);  // Passando os feedbacks para a view
-        return "feedback/lista";  // Página de feedbacks
     }
 
-    @PostMapping("/alterarStatus")
-    public String alterarStatus(@RequestParam("id") Long id, @RequestParam("status") StatusOrdem status) {
-        Ordem ordem = ordemService.buscarOrdemPorId(id);
-        if (ordem != null) {
-            ordem.setStatus(status);  // Atualiza o status da ordem
-            ordemService.salvarOrdem(ordem);  // Salva a ordem com o novo status
-        }
-        return "redirect:/feedback/listar";  // Redireciona de volta para a lista de feedbacks
-    }
+    public static class OrdemRequest {
+        private String assunto;
+        private String descricao;
+        private String nomeUsuario;
 
+        public String getAssunto() { return assunto; }
+        public void setAssunto(String assunto) { this.assunto = assunto; }
+        public String getDescricao() { return descricao; }
+        public void setDescricao(String descricao) { this.descricao = descricao; }
+        public String getNomeUsuario() { return nomeUsuario; }
+        public void setNomeUsuario(String nomeUsuario) { this.nomeUsuario = nomeUsuario; }
+        @Override
+        public String toString() {
+            return "OrdemRequest{assunto='" + assunto + "', descricao='" + descricao + "', nomeUsuario='" + nomeUsuario + "'}";
+        }
+    }
 }
-

@@ -10,50 +10,33 @@ public class Ordem extends AbstractEntity<Long> {
 
     @ManyToOne
     @JoinColumn(name = "usuario_id", nullable = false)
-    private Usuario usuario; // Quem abriu a ordem
+    private Usuario usuario;
 
     @Column(nullable = false)
-    private String descricao; // Comentário ou feedback
+    private String assunto; // Adicionado conforme sua necessidade
+
+    @Column(nullable = false)
+    private String descricao;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private StatusOrdem status; // Agora será inicializado no construtor
+    private StatusOrdem status;
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime dataCriacao;
 
-    // Construtor para inicializar os valores padrão
     public Ordem() {
         this.dataCriacao = LocalDateTime.now();
-        this.status = StatusOrdem.PENDENTE; // Padrão definido no construtor
+        this.status = StatusOrdem.PENDENTE;
     }
 
-    // Getters e Setters
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public StatusOrdem getStatus() {
-        return status;
-    }
-
-    public void setStatus(StatusOrdem pendente) {
-        this.status = pendente;
-    }
-
-    public LocalDateTime getDataCriacao() {
-        return dataCriacao;
-    }
+    public Usuario getUsuario() { return usuario; }
+    public void setUsuario(Usuario usuario) { this.usuario = usuario; }
+    public String getAssunto() { return assunto; }
+    public void setAssunto(String assunto) { this.assunto = assunto; }
+    public String getDescricao() { return descricao; }
+    public void setDescricao(String descricao) { this.descricao = descricao; }
+    public StatusOrdem getStatus() { return status; }
+    public void setStatus(StatusOrdem status) { this.status = status; }
+    public LocalDateTime getDataCriacao() { return dataCriacao; }
 }

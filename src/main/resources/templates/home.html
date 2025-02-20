@@ -28,13 +28,14 @@
  </header>
  
 <div class="d-flex justify-content-center mt-5">
-        <h2>Bem-vindo ao ReqHub – Seu Canal de Feadback para o SIMECC</h2>
+<h2>Bem-vindo ao ReqHub – Seu Canal de Solicitações e Melhorias</h2>
     </div>
     
   <main>
   <section class="introduction text-center">
-    <p style="font-size: 18px;">O ReqHub é a ferramenta ideal para registrar bugs e sugerir melhorias no SIMECC. Se encontrou algum
-    problema ou tem uma ideia para aprimorar o sistema, basta registrar sua requisição e acompanhar o status até a solução.</p>
+    <p style="font-size: 20px;">O ReqHub é a ferramenta ideal para relatar problemas e sugerir melhorias no SIMECC. 
+    Caso identifique um erro ou tenha uma sugestão, registre sua solicitação e acompanhe o status até a resolução.
+    </p>
 </section>
 
 
@@ -46,7 +47,7 @@
                 <img src="img/user_c.png" class="card-img-top" alt="Criar Usuário">
                 <div class="card-body">
                     <h5 class="card-title">Criar Usuário</h5>
-                    <p class="card-text">Crie sua conta no sistema, fornecendo as informações necessárias para um cadastro rápido e simples. Garanta acesso completo à plataforma.</p>
+                    <p class="card-text">Crie sua conta no sistema, fornecendo as informações necessárias para um cadastro rápido e simples.</p>
                     <a th:href="@{/users/cadastrar}" class="btn btn-primary">Criar Conta</a>
                      <a th:href="@{/setores/cadastrar}" class="btn btn-primary">Criar Setor</a>
                 </div>
@@ -58,9 +59,9 @@
             <div class="card">
                 <img src="img/suggestion.jpg" class="card-img-top" alt="Registrar Feedback">
                 <div class="card-body">
-                    <h5 class="card-title">Registrar Feedback</h5>
-                    <p class="card-text">Informe sobre bugs encontrados ou sugira melhorias para o sistema. Sua contribuição é essencial para melhorar a plataforma!</p>
-                    <a th:href="@{/ordens/comentario}" class="btn btn-primary">Registrar Feedback</a>
+                    <h5 class="card-title">Chamado</h5>
+                    <p class="card-text">Relate problemas técnicos ou sugira melhorias para o sistema. Sua colaboração ajuda a otimizar a plataforma!</p>
+                    <a th:href="@{/ordens/comentario}" class="btn btn-primary">Registrar Solicitação</a>
                 </div>
             </div>
         </div>
@@ -71,7 +72,7 @@
                 <img src="img/search.jpg" class="card-img-top" alt="Consultar Feedback">
                 <div class="card-body">
                     <h5 class="card-title">Consultar Feedback</h5>
-                    <p class="card-text">Acompanhe o andamento dos seus feedbacks e verifique se suas sugestões estão sendo implementadas ou se o problema foi resolvido.</p>
+                    <p class="card-text">Acompanhe o andamento das suas solicitações e verifique se suas sugestões estão sendo implementadas ou se o problema foi resolvido.</p>
                     <a th:href="@{/ordens/buscar}" class="btn btn-primary">Ver Status</a>
                 </div>
             </div>
