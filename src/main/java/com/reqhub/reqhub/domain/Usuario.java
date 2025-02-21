@@ -23,6 +23,8 @@ public class Usuario extends AbstractEntity<Long> {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 10)
     private TipoUsuario tipoUser;
+    @Transient
+    private String codigo;
 
     @Column(nullable = true, length = 10)
     private String senha;
@@ -41,4 +43,6 @@ public class Usuario extends AbstractEntity<Long> {
     public void setTipoUser(TipoUsuario tipoUser) { this.tipoUser = tipoUser; }
     public String getSenha() { return senha; }
     public void setSenha(String senha) { this.senha = senha; }
+    public String getCodigo() { return codigo; }
+    public void setCodigo(String codigo) { this.codigo = codigo; }
 }

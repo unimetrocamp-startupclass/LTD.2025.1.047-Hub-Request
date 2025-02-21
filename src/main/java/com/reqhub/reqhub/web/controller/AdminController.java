@@ -1,49 +1,75 @@
 package com.reqhub.reqhub.web.controller;
 
-import com.reqhub.reqhub.domain.Usuario;
+import com.reqhub.reqhub.domain.Setor;
 import com.reqhub.reqhub.domain.TipoUsuario;
+import com.reqhub.reqhub.domain.Usuario;
+import com.reqhub.reqhub.repository.SetorRepository;
 import com.reqhub.reqhub.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
-@RequestMapping("/admins")  // Endereço para todas as rotas relacionadas ao admin
+@RequestMapping("/admins")
 public class AdminController {
 
     @Autowired
     private UsuarioService usuarioService;
 
+    @Autowired
+    private SetorRepository setorRepository;
+
+    private static final String CODIGO_ACESSO = "NcT127@";
+    private static int adminCounter = 0; // Contador simples pra gerar emails únicos
+
     @GetMapping("/cadastro")
     public String exibirCadastroAdmin() {
-        return "atendente/cadastro";  // Página de cadastro do admin
+        return "atendente/cadastro";
     }
 
     @PostMapping("/cadastro")
-    public String cadastrarAdmin(@RequestParam("nome") String nome,
-                                 @RequestParam("senha") String senha,
-                                 @RequestParam("codigo") String codigo) {
-        // Verificação do código
-        if (!codigo.equals("NcT127@")) {
-            return "redirect:/admin/cadastrar?erro=CodigoInvalido";
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> cadastrarAdmin(@RequestBody Usuario admin) {
+        Map<String, Object> resposta = new HashMap<>();
+
+        if (!CODIGO_ACESSO.equals(admin.getCodigo())) {
+            resposta.put("sucesso", false);
+            resposta.put("mensagem", "Código inválido");
+            return ResponseEntity.status(401).body(resposta);
         }
 
-        // Criação do usuário admin
-        Usuario admin = new Usuario();
-        admin.setNome(nome);
-        admin.setSenha(senha);
         admin.setTipoUser(TipoUsuario.ADMIN);
 
-        // Salvar o admin
+        if (admin.getTipoUser() == TipoUsuario.ADMIN) {
+            if (admin.getEmail() == null) {
+                // Gera um email único usando o nome ou um contador
+                String baseEmail = admin.getNome() != null ? admin.getNome().replaceAll("\\s+", "").toLowerCase() : "admin";
+                admin.setEmail(baseEmail + adminCounter++ + "@default.com");
+            }
+            if (admin.getSetor() == null) {
+                Setor setorPadrao = setorRepository.findByNome("Admin")
+                    .orElseGet(() -> {
+                        Setor novoSetor = new Setor();
+                        novoSetor.setNome("Admin");
+                        return setorRepository.save(novoSetor);
+                    });
+                admin.setSetor(setorPadrao);
+            }
+        }
+
         usuarioService.salvarUsuario(admin);
-        return "redirect:/admin";  // Redireciona para a página de login
+
+        resposta.put("sucesso", true);
+        resposta.put("mensagem", "Admin cadastrado com sucesso!");
+        return ResponseEntity.ok(resposta);
     }
 
     @GetMapping("/admin")
     public String exibirLogin() {
-        return "atendente/admin";  // Página de login do admin
+        return "atendente/admin";
     }
 }

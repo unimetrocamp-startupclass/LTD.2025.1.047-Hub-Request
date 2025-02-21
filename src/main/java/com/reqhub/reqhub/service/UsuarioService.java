@@ -1,5 +1,6 @@
 package com.reqhub.reqhub.service;
 
+import com.reqhub.reqhub.domain.TipoUsuario;
 import com.reqhub.reqhub.domain.Usuario;
 import com.reqhub.reqhub.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,11 @@ public class UsuarioService {
 
     @Transactional
     public void salvarUsuario(Usuario usuario) {
-        // Para usuários normais, salva diretamente
+        if (usuario.getTipoUser() != TipoUsuario.ADMIN) {
+            if (usuario.getEmail() == null || usuario.getRamal() == null || usuario.getSetor() == null) {
+                throw new IllegalArgumentException("Email, ramal e setor são obrigatórios para não-admins");
+            }
+        }
         usuarioRepository.save(usuario);
     }
 
