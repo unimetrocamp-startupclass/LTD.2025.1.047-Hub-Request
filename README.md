@@ -38,9 +38,9 @@ Bem-vindo ao **ReqHub**, um sistema desenvolvido para gerenciar solicitações e
 
 ## Pré-requisitos
 
-- Java 17 ou superior
+- Java 21
 - Maven 3.6+
-- PostgreSQL 13+
+- PostgreSQL 14
 - IDE (ex.: Eclipse, IntelliJ) opcional
 
 ## Configuração
