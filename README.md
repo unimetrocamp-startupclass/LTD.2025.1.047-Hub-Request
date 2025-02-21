@@ -6,7 +6,7 @@ Bem-vindo ao **ReqHub**, um sistema desenvolvido para gerenciar solicitações e
 
 - **Cadastro de Usuários:**
   - Usuários comuns podem se cadastrar fornecendo nome, email, ramal e setor.
-  - Administradores têm um cadastro restrito, autenticado por um código de acesso (`NcT127@`), e não precisam de email, ramal ou setor (valores padrão são aplicados).
+  - Administradores têm um cadastro restrito, autenticado por um código de acesso (`******`), e não precisam de email, ramal ou setor (valores padrão são aplicados).
 
 - **Gerenciamento de Ordens:**
   - Criação de ordens (chamados) com descrição e status (ex.: "PENDENTE", "RESOLVIDA").
