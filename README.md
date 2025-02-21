@@ -59,6 +59,4 @@ Bem-vindo ao **ReqHub**, um sistema desenvolvido para gerenciar solicitações e
 - Substitua `<URL_DO_REPOSITORIO>` pelo link real do seu repositório Git, se tiver.
 - Ajuste os detalhes (ex.: nome do sistema, funcionalidades específicas) se necessário.
 
-O que acha? Quer adicionar algo mais ou mudar algum trecho? Me avise!
-
 
