@@ -2,16 +2,15 @@ package com.reqhub.reqhub.web.controller;
 
 import com.reqhub.reqhub.domain.Ordem;
 import com.reqhub.reqhub.service.OrdemService;
+import java.util.Collections;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/ordens")
@@ -26,7 +25,7 @@ public class OrdemController {
     public String comentario(Model model) {
         logger.info("Acessando página de cadastro de ordem em /ordens/comentario");
         model.addAttribute("ordem", new Ordem());
-        return "ordem/comentario"; // Aponta para ordem/comentario.html
+        return "ordem/comentario";
     }
 
     @PostMapping("/comentario")
@@ -45,6 +44,30 @@ public class OrdemController {
         }
     }
 
+    // Redireciona GET /ordens/pesquisa para a página HTML
+    @GetMapping("/pesquisa")
+    public String redirecionarPesquisa() {
+        return "ordem/pesquisa";
+    }
+
+    @PostMapping("/pesquisa")
+    @ResponseBody
+    public ResponseEntity<List<Ordem>> pesquisarOrdens(@RequestBody PesquisaRequest pesquisaRequest) {
+        logger.info("Recebido POST para /ordens/pesquisa: {}", pesquisaRequest);
+        
+        List<Ordem> ordens;
+        if (pesquisaRequest.getId() != null) {
+            Ordem ordem = ordemService.findById(pesquisaRequest.getId());
+            ordens = ordem != null ? Collections.singletonList(ordem) : Collections.emptyList();
+        } else if (pesquisaRequest.getNome() != null && !pesquisaRequest.getNome().trim().isEmpty()) {
+            ordens = ordemService.buscarOrdensPorNomeUsuario(pesquisaRequest.getNome());
+        } else {
+            ordens = ordemService.listarTodasOrdens();
+        }
+        
+        return ResponseEntity.ok(ordens);
+    }
+
     public static class OrdemRequest {
         private String assunto;
         private String descricao;
@@ -59,6 +82,20 @@ public class OrdemController {
         @Override
         public String toString() {
             return "OrdemRequest{assunto='" + assunto + "', descricao='" + descricao + "', nomeUsuario='" + nomeUsuario + "'}";
+        }
+    }
+
+    public static class PesquisaRequest {
+        private Long id;
+        private String nome;
+
+        public Long getId() { return id; }
+        public void setId(Long id) { this.id = id; }
+        public String getNome() { return nome; }
+        public void setNome(String nome) { this.nome = nome; }
+        @Override
+        public String toString() {
+            return "PesquisaRequest{id=" + id + ", nome='" + nome + "'}";
         }
     }
 }

@@ -83,14 +83,14 @@
       .catch(error => {
         console.error('Erro:', error);
         document.getElementById('mensagemFeedback').innerHTML = 
-          "<div class='alert alert-danger' role='alert'>Falha ao cadastrar o feedback: " + error.message + "</div>";
+          "<div class='alert alert-danger' role='alert'>Falha ao cadastrar o chamado: " + error.message + "</div>";
       });
     });
 
     function exibirIdFeedback(feedbackId) {
       var mensagemDiv = document.getElementById("mensagemFeedback");
       mensagemDiv.innerHTML = 
-        "<div class='alert alert-success' role='alert'>Feedback enviado com sucesso! Seu ID é: " + feedbackId + "</div>";
+        "<div class='alert alert-success' role='alert'>Chamado enviado com sucesso! Seu protocolo é: " + feedbackId + "</div>";
     }
   </script>
 
