@@ -11,3 +11,25 @@
 .btn-primary{
  background-color: #1A2E35;
 }
+
+.card {
+    border-radius: 70px; /* Arredonda os cantos da box */
+    overflow: hidden; /* Evita que o conteúdo ultrapasse as bordas */
+    border: 2px solid #ddd; /* Adiciona uma borda sutil */
+    padding: 10px; /* Espaçamento interno */
+    background-color: white; /* Garante um fundo visível */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); /* Sombra para destacar */
+    
+}
+
+#specific-img {
+  width: 50%;
+  height: auto;
+}
+
+.btn.btn-primary {
+ border-radius: 25px;
+}
+
+
+

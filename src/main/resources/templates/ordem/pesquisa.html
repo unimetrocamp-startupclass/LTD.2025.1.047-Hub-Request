@@ -70,49 +70,52 @@
             const id = document.getElementById("id").value;
             const nome = document.getElementById("nome").value;
             let request = {};
-            if (id) request.id = parseInt(id);
-            if (nome) request.nome = nome;
 
-            fetch('/ordens/pesquisa', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(request)
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Erro na busca: ' + response.status);
-                }
-                return response.json();
-            })
-            .then(ordens => {
-                const tbody = document.getElementById("ordensTable");
-                tbody.innerHTML = "";
-                if (ordens.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="5" class="text-center">Nenhuma ordem encontrada</td></tr>';
-                } else {
-                    ordens.forEach(ordem => {
-                        tbody.innerHTML += `
-                            <tr>
-                                <td>${ordem.id}</td>
-                                <td>${ordem.assunto}</td>
-                                <td>${ordem.descricao}</td>
-                                <td>${ordem.status}</td>
-                                <td>${ordem.usuario.nome}</td>
-                            </tr>`;
-                        });
-                    }
+            // Só envia a requisição se pelo menos um campo estiver preenchido
+            if (id || nome) {
+                if (id) request.id = parseInt(id);
+                if (nome) request.nome = nome;
+
+                fetch('/ordens/pesquisa', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(request)
                 })
-                .catch(error => {
-                    console.error("Erro:", error);
-                    document.getElementById("ordensTable").innerHTML = 
-                        '<tr><td colspan="5" class="text-center">Erro ao buscar ordens: ' + error.message + '</td></tr>';
-                });
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erro na busca: ' + response.status);
+                    }
+                    return response.json();
+                })
+                .then(ordens => {
+                    const tbody = document.getElementById("ordensTable");
+                    tbody.innerHTML = "";
+                    if (ordens.length === 0) {
+                        tbody.innerHTML = '<tr><td colspan="5" class="text-center">Nenhuma ordem encontrada</td></tr>';
+                    } else {
+                        ordens.forEach(ordem => {
+                            tbody.innerHTML += `
+                                <tr>
+                                    <td>${ordem.id}</td>
+                                    <td>${ordem.assunto}</td>
+                                    <td>${ordem.descricao}</td>
+                                    <td>${ordem.status}</td>
+                                    <td>${ordem.usuario.nome}</td>
+                                </tr>`;
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Erro:", error);
+                        document.getElementById("ordensTable").innerHTML = 
+                            '<tr><td colspan="5" class="text-center">Erro ao buscar ordens: ' + error.message + '</td></tr>';
+                    });
+            } else {
+                // Se ambos os campos estiverem vazios, limpa a tabela
+                document.getElementById("ordensTable").innerHTML = 
+                    '<tr><td colspan="5" class="text-center">Por favor, insira um ID ou nome para buscar</td></tr>';
+            }
         }
-
-        // Carrega todas as ordens ao abrir a página
-        window.onload = function() {
-            buscarFeedback({ preventDefault: () => {} }); // Chama a função com evento simulado
-        };
     </script>
 </body>
 </html>
