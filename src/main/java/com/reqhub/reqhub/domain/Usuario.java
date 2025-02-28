@@ -23,8 +23,6 @@ public class Usuario extends AbstractEntity<Long> {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 10)
     private TipoUsuario tipoUser;
-    @Transient
-    private String codigo;
 
     @Column(nullable = true, length = 10)
     private String senha;
@@ -33,16 +31,24 @@ public class Usuario extends AbstractEntity<Long> {
 
     public String getNome() { return nome; }
     public void setNome(String nome) { this.nome = nome; }
+
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
+
     public String getRamal() { return ramal; }
     public void setRamal(String ramal) { this.ramal = ramal; }
+
     public Setor getSetor() { return setor; }
-    public void setSetor(Setor setor) { this.setor = setor; }
+    public void setSetor(Setor setor) { 
+        this.setor = setor; 
+        if ("TI".equalsIgnoreCase(setor.getNome())) { 
+            this.tipoUser = TipoUsuario.ADMIN;
+        }
+    }
+
     public TipoUsuario getTipoUser() { return tipoUser; }
     public void setTipoUser(TipoUsuario tipoUser) { this.tipoUser = tipoUser; }
+
     public String getSenha() { return senha; }
     public void setSenha(String senha) { this.senha = senha; }
-    public String getCodigo() { return codigo; }
-    public void setCodigo(String codigo) { this.codigo = codigo; }
 }

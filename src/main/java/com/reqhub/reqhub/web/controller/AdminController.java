@@ -23,8 +23,7 @@ public class AdminController {
     @Autowired
     private SetorRepository setorRepository;
 
-    private static final String CODIGO_ACESSO = "NcT127@";
-    private static int adminCounter = 0; // Contador simples pra gerar emails únicos
+    private static int adminCounter = 0;
 
     @GetMapping("/cadastro")
     public String exibirCadastroAdmin() {
@@ -36,29 +35,24 @@ public class AdminController {
     public ResponseEntity<Map<String, Object>> cadastrarAdmin(@RequestBody Usuario admin) {
         Map<String, Object> resposta = new HashMap<>();
 
-        if (!CODIGO_ACESSO.equals(admin.getCodigo())) {
-            resposta.put("sucesso", false);
-            resposta.put("mensagem", "Código inválido");
-            return ResponseEntity.status(401).body(resposta);
+        // Removida a validação do código de acesso
+        // Definindo o setor primeiro
+        if (admin.getSetor() == null) {
+            Setor setorPadrao = setorRepository.findByNome("Admin")
+                .orElseGet(() -> {
+                    Setor novoSetor = new Setor();
+                    novoSetor.setNome("Admin");
+                    return setorRepository.save(novoSetor);
+                });
+            admin.setSetor(setorPadrao); // Chama setSetor aqui primeiro
         }
 
+        // Garante que tipoUser seja ADMIN, sobrescrevendo qualquer lógica do setSetor
         admin.setTipoUser(TipoUsuario.ADMIN);
 
-        if (admin.getTipoUser() == TipoUsuario.ADMIN) {
-            if (admin.getEmail() == null) {
-                // Gera um email único usando o nome ou um contador
-                String baseEmail = admin.getNome() != null ? admin.getNome().replaceAll("\\s+", "").toLowerCase() : "admin";
-                admin.setEmail(baseEmail + adminCounter++ + "@default.com");
-            }
-            if (admin.getSetor() == null) {
-                Setor setorPadrao = setorRepository.findByNome("Admin")
-                    .orElseGet(() -> {
-                        Setor novoSetor = new Setor();
-                        novoSetor.setNome("Admin");
-                        return setorRepository.save(novoSetor);
-                    });
-                admin.setSetor(setorPadrao);
-            }
+        if (admin.getEmail() == null) {
+            String baseEmail = admin.getNome() != null ? admin.getNome().replaceAll("\\s+", "").toLowerCase() : "admin";
+            admin.setEmail(baseEmail + adminCounter++ + "@default.com");
         }
 
         usuarioService.salvarUsuario(admin);
@@ -66,10 +60,5 @@ public class AdminController {
         resposta.put("sucesso", true);
         resposta.put("mensagem", "Admin cadastrado com sucesso!");
         return ResponseEntity.ok(resposta);
-    }
-
-    @GetMapping("/admin")
-    public String exibirLogin() {
-        return "atendente/admin";
     }
 }
