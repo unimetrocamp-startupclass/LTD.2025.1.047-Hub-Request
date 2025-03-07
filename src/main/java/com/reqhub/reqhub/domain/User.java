@@ -6,8 +6,8 @@ import jakarta.persistence.*;
 
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "USUARIOS")
-public class Usuario extends AbstractEntity<Long> {
+@Table(name = "users")
+public class User extends AbstractEntity<Long> {
 
     @Column(nullable = false, unique = true, length = 100)
     private String nome;
@@ -22,18 +22,14 @@ public class Usuario extends AbstractEntity<Long> {
     @JoinColumn(name = "setor_id", nullable = false)
     private Setor setor;
 
-    @OneToMany(mappedBy = "usuario")
+    @OneToMany(mappedBy = "user")
     private List<Authority> authorities;
 
     @Column(nullable = true, length = 10)
     private String senha;
 
-    public Usuario() {}
+    public User() {}
 
-    
-    public void setAuthorities(List<Authority> authorities) {
-        this.authorities = authorities;
-    }
     public String getNome() { return nome; }
     public void setNome(String nome) { this.nome = nome; }
     public String getEmail() { return email; }
@@ -41,15 +37,11 @@ public class Usuario extends AbstractEntity<Long> {
     public String getRamal() { return ramal; }
     public void setRamal(String ramal) { this.ramal = ramal; }
     public Setor getSetor() { return setor; }
-    public void setSetor(Setor setor) { this.setor = setor;
-    
-     if (setor.getNome().equals("TI")) {
-    	 this.authorities.add(new Authority("ADMIN", this));
-    	 
-     } else {
-    	 this.authorities.add(new Authority("USER", this));
-     }
-    
+    public void setSetor(Setor setor) { this.setor = setor; }
+    public String getSenha() { return senha; }
+    public void setSenha(String senha) { this.senha = senha; }
+    public void setAuthorities(List<Authority> authorities) {
+        this.authorities = authorities;
     }
-  
 }
+
