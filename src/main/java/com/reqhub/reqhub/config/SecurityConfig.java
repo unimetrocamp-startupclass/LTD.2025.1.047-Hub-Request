@@ -48,7 +48,7 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable()) // Desativado para testes
             .authorizeHttpRequests(authorizeRequests -> 
                 authorizeRequests
-                    .requestMatchers("/","/auths/login", "/auths/cadastrar", "/css/**", "/img/**", "/js/**").permitAll() // URLs públicas
+                    .requestMatchers("/", "/auths/cadastrar", "/auths/login", "/css/**", "/img/**", "/js/**").permitAll() // URLs públicas
                     .requestMatchers("/users/**").hasRole("ADMIN")
                     .requestMatchers("/authorities/**").hasRole("ADMIN")
                     .requestMatchers("/home").hasAnyRole("USER", "ADMIN")
@@ -56,16 +56,16 @@ public class SecurityConfig {
             )
             .formLogin(form -> 
                 form
-                    .loginPage("/auth/login")
+                    .loginPage("/auths/login") // Página de login
                     .loginProcessingUrl("/authenticate")
-                    .defaultSuccessUrl("/home", true)
-                    .failureUrl("/auth/login?error") // Define explicitamente a URL de falha
+                    .defaultSuccessUrl("/home", true) // Aqui você pode mudar para '/auths/login' se preferir
+                    .failureUrl("/auths/login?error") // Define explicitamente a URL de falha
                     .permitAll()
             )
             .logout(logout -> 
                 logout
                     .logoutUrl("/logout")
-                    .logoutSuccessUrl("/auth/login?logout")
+                    .logoutSuccessUrl("/auths/login?logout")
                     .permitAll()
             )
             .exceptionHandling(exception -> 

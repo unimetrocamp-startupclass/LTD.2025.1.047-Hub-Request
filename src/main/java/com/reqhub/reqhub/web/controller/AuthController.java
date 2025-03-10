@@ -13,7 +13,7 @@ public class AuthController {
 		return "auth/login";
 	}
 	
-	@GetMapping("cadastrar")
+	@GetMapping("/cadastrar")
 	public String cadastrar() {
 		return "auth/cadastrar";
 	}

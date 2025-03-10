@@ -5,14 +5,12 @@ import com.reqhub.reqhub.domain.Usuario;
 import com.reqhub.reqhub.repository.SetorRepository;
 import com.reqhub.reqhub.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
-@RestController
+@Controller // Removido o @RestController aqui
 @RequestMapping("/users")
 public class UsuarioController {
 
@@ -23,21 +21,24 @@ public class UsuarioController {
     private SetorRepository setorRepository;
 
     @Autowired
-    private PasswordEncoder passwordEncoder; // Injetado aqui
+    private PasswordEncoder passwordEncoder;
 
     @GetMapping("/cadastrar")
     public String exibirFormularioCadastro(Model model) {
         model.addAttribute("setores", setorRepository.findAll());
-        return "cadastro";
+        return "cadastro";  // Retorna a página de cadastro
     }
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<String> cadastrarUsuario(@RequestBody Usuario usuario) {
+    public String cadastrarUsuario(@ModelAttribute Usuario usuario) {
         if (usuarioRepository.existsByEmail(usuario.getEmail())) {
-            return ResponseEntity.badRequest().body("Email já existente");
+            return "redirect:/users/cadastrar?error=email"; // Se o email já existir, redireciona com erro
         }
-        usuario.setSenha(passwordEncoder.encode(usuario.getSenha())); // Usa o bean injetado
+        Setor setor = setorRepository.findById(usuario.getSetor().getId())
+                .orElseThrow(() -> new IllegalArgumentException("Setor inválido"));
+        usuario.setSetor(setor);
+        usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
         usuarioRepository.save(usuario);
-        return ResponseEntity.ok("Usuário cadastrado com sucesso");
+        return "redirect:/auths/login"; // Após o cadastro, redireciona para a página de login
     }
 }

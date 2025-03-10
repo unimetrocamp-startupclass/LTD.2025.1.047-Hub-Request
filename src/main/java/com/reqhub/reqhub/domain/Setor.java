@@ -2,20 +2,20 @@ package com.reqhub.reqhub.domain;
 
 import jakarta.persistence.*;
 
-@SuppressWarnings("serial")
 @Entity
-@Table(name = "SETORES")
-public class Setor extends AbstractEntity<Long> {
+@Table(name = "setores")
+public class Setor {
 
-    @Column(name = "nome", nullable = false, unique = true, length = 60)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false)
     private String nome;
 
-    public Setor() {}
-
-    public Setor(String nome) {
-        this.nome = nome.trim();
-    }
-
+    // Getters e Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
     public String getNome() { return nome; }
-    public void setNome(String nome) { this.nome = (nome != null) ? nome.trim() : null; }
+    public void setNome(String nome) { this.nome = nome; }
 }
