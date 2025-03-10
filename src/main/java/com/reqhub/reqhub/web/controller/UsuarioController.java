@@ -1,48 +1,43 @@
 package com.reqhub.reqhub.web.controller;
 
 import com.reqhub.reqhub.domain.Setor;
-import com.reqhub.reqhub.domain.TipoUsuario;
 import com.reqhub.reqhub.domain.Usuario;
-import com.reqhub.reqhub.service.SetorService;
-import com.reqhub.reqhub.service.UsuarioService;
+import com.reqhub.reqhub.repository.SetorRepository;
+import com.reqhub.reqhub.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
+@RestController
 @RequestMapping("/users")
 public class UsuarioController {
 
     @Autowired
-    private UsuarioService usuarioService;
+    private UsuarioRepository usuarioRepository;
 
     @Autowired
-    private SetorService setorService;
+    private SetorRepository setorRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder; // Injetado aqui
 
     @GetMapping("/cadastrar")
-    public String cadastrar(Model model) {
-        List<Setor> setores = setorService.buscarTodosSetores();
-        model.addAttribute("setores", setores);
-        model.addAttribute("usuario", new Usuario());
-        return "user/cadastro"; // Ajuste para "user/cadastrar" se o HTML for "cadastrar.html"
+    public String exibirFormularioCadastro(Model model) {
+        model.addAttribute("setores", setorRepository.findAll());
+        return "cadastro";
     }
 
     @PostMapping("/cadastrar")
-    public String cadastrarUsuario(@RequestBody Usuario usuario) {
-        if (usuario.getSetor() != null && usuario.getSetor().getId() != null) {
-            // Garante que tipoUser seja definido (não nulo)
-            if (usuario.getTipoUser() == null) {
-                usuario.setTipoUser(TipoUsuario.COMUM);
-            }
-            usuarioService.salvarUsuario(usuario); // JPA mapeia o setor pelo ID
-            return "redirect:/ordens/comentario";
+    public ResponseEntity<String> cadastrarUsuario(@RequestBody Usuario usuario) {
+        if (usuarioRepository.existsByEmail(usuario.getEmail())) {
+            return ResponseEntity.badRequest().body("Email já existente");
         }
-        return "redirect:/users/cadastrar";
+        usuario.setSenha(passwordEncoder.encode(usuario.getSenha())); // Usa o bean injetado
+        usuarioRepository.save(usuario);
+        return ResponseEntity.ok("Usuário cadastrado com sucesso");
     }
 }

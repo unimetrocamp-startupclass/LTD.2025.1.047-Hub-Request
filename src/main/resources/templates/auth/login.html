@@ -25,15 +25,10 @@
     <body>
         <header>
             <nav class="navbar navbar-dark bg-dark">
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="/">
                     <img src="/img/icon.png" width="50" height="50" class="d-inline-block align-top" style="margin-left: 5vw;" alt="" />
                     ReqHub
                 </a>
-                <div class="ml-auto">
-                    <a th:href="@{/admins/cadastro}" class="navbar-brand">
-                        <span class="ml-2" style="font-size: 20px;">Login</span>
-                    </a>
-                </div>
             </nav>
         </header>
 
@@ -43,7 +38,7 @@
                     <h5 class="card-title text-center">Fazer Login</h5>
                     <form autocomplete="off" onsubmit="return false;">
                         <div class="mb-3">
-                            <label for="username" class="form-label w-75 mx-auto d-block">Username</label>
+                            <label for="username" class="form-label w-75 mx-auto d-block">Usuario</label>
                             <input type="text" class="form-control w-75 mx-auto" id="username" ... />
                         </div>
                         <div class="mb-3">
@@ -55,7 +50,7 @@
                         </div>
                     </form>
                     <div class="text-center mt-3">
-                        <p>Ainda não possui conta? <a th:href="@{/admins/cadastro}" class="text-primary">Clique aqui</a></p>
+                        <p>Ainda não possui conta? <a th:href="@{/auths/cadastrar}" class="text-primary">Clique aqui</a></p>
                     </div>
                 </div>
             </div>
