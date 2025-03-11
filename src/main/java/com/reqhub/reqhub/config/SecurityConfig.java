@@ -48,7 +48,7 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable()) // Desativado para testes
             .authorizeHttpRequests(authorizeRequests -> 
                 authorizeRequests
-                    .requestMatchers("/", "/auths/cadastrar", "/auths/login", "/css/**", "/img/**", "/js/**").permitAll() // URLs públicas
+                    .requestMatchers("/", "/auths/cadastrar", "/css/**", "/img/**", "/js/**").permitAll() // URLs públicas
                     .requestMatchers("/users/**").hasRole("ADMIN")
                     .requestMatchers("/authorities/**").hasRole("ADMIN")
                     .requestMatchers("/home").hasAnyRole("USER", "ADMIN")

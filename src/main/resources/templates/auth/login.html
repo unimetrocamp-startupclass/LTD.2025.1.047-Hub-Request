@@ -49,9 +49,9 @@
                             <button type="submit" class="btn btn-primary" style="width: 30%;">Logar</button>
                         </div>
                     </form>
-                    <div class="text-center mt-3">
-                        <p>Ainda não possui conta? <a href="@{/auths/cadastrar}" class="text-primary">Clique aqui</a></p>
-                    </div>
+                   <div class="text-center mt-3">
+    <p>Ainda não possui conta? <a th:href="@{/auths/cadastrar}"  class="text-primary" onclick="console.log('Clicando em /auths/cadastrar')">Clique aqui</a></p>
+</div>
                 </div>
             </div>
         </section>
