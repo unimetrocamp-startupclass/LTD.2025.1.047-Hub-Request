@@ -30,7 +30,7 @@ public class UsuarioController {
     }
 
     @PostMapping("/cadastrar")
-    public String cadastrarUsuario(@ModelAttribute Usuario usuario) {
+    public String cadastrarUsuario(@RequestBody Usuario usuario) {
         if (usuarioRepository.existsByEmail(usuario.getEmail())) {
             return "redirect:/users/cadastrar?error=email"; // Se o email já existir, redireciona com erro
         }
