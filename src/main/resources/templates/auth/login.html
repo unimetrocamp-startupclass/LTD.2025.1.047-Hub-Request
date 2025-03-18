@@ -8,18 +8,8 @@
         <title>ReqHub - Login</title>
         <link rel="stylesheet" href="/css/style.css" />
         <style>
-            /* Centraliza a caixa de login verticalmente e horizontalmente */
-            html, body {
-                height: 100%;
-                margin: 0;
-            }
-            .login-container {
-                min-height: 100vh;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-           
+            html, body { height: 100%; margin: 0; }
+            .login-container { min-height: 100vh; display: flex; justify-content: center; align-items: center; }
         </style>
     </head>
     <body>
@@ -36,22 +26,23 @@
             <div class="card" style="max-width: 600px; width: 100%;">
                 <div class="card-body">
                     <h5 class="card-title text-center">Fazer Login</h5>
-                    <form autocomplete="off" onsubmit="return false;">
+                    <form method="post" action="/auths/login">
                         <div class="mb-3">
-                            <label for="username" class="form-label w-75 mx-auto d-block">Usuario</label>
-                            <input type="text" class="form-control w-75 mx-auto" id="username" ... />
+                            <label for="email" class="form-label w-75 mx-auto d-block">Email</label>
+                            <input type="email" class="form-control w-75 mx-auto" id="email" name="username" required />
                         </div>
                         <div class="mb-3">
-                           <label for="username" class="form-label w-75 mx-auto d-block">Senha</label>
-                            <input type="text" class="form-control w-75 mx-auto" id="username" ... />
+                            <label for="senha" class="form-label w-75 mx-auto d-block">Senha</label>
+                            <input type="password" class="form-control w-75 mx-auto" id="senha" name="password" required />
                         </div>
                         <div class="text-center">
                             <button type="submit" class="btn btn-primary" style="width: 30%;">Logar</button>
                         </div>
                     </form>
-                   <div class="text-center mt-3">
-    <p>Ainda não possui conta? <a th:href="@{/auths/cadastrar}"  class="text-primary" onclick="console.log('Clicando em /auths/cadastrar')">Clique aqui</a></p>
-</div>
+
+                    <div class="text-center mt-3">
+                        <p>Ainda não possui conta? <a th:href="@{/auths/cadastrar}" class="text-primary">Clique aqui</a></p>
+                    </div>
                 </div>
             </div>
         </section>

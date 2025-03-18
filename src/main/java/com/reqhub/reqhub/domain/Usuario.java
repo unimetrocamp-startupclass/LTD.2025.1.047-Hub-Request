@@ -19,7 +19,7 @@ public class Usuario extends AbstractEntity<Long> {
     @Column(length = 4, nullable = true)
     private String ramal;
 
-    @Column(nullable = true, length = 10)
+    @Column(nullable = true, length = 255)
     private String senha;
 
     @ManyToOne

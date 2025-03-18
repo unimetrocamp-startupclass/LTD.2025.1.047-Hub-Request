@@ -1,7 +1,6 @@
 package com.reqhub.reqhub.repository;
 
 import com.reqhub.reqhub.domain.Ordem;
-import com.reqhub.reqhub.domain.StatusOrdem;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;

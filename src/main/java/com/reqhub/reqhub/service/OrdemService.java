@@ -1,7 +1,7 @@
 package com.reqhub.reqhub.service;
 
 import com.reqhub.reqhub.domain.Ordem;
-import com.reqhub.reqhub.domain.StatusOrdem;
+
 import com.reqhub.reqhub.domain.Usuario;
 import com.reqhub.reqhub.repository.OrdemRepository;
 import com.reqhub.reqhub.repository.UsuarioRepository;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
 public class OrdemService {

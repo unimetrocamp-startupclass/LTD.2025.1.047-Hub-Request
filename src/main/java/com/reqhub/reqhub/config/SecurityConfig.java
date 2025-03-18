@@ -1,40 +1,30 @@
 package com.reqhub.reqhub.config;
 
-import com.reqhub.reqhub.domain.Authority;
-import com.reqhub.reqhub.repository.UsuarioRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+
+import com.reqhub.reqhub.repository.UsuarioRepository;
+import com.reqhub.reqhub.security.CustomUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Autowired
-    private UsuarioRepository usuarioRepository;
+    private final UsuarioRepository usuarioRepository;
 
-    @Bean
-    public UserDetailsService userDetailsService() {
-        return username -> usuarioRepository.findByEmail(username)
-            .map(usuario -> {
-                String[] roles = usuario.getAuthorities()
-                    .stream()
-                    .map(Authority::getAuthority)
-                    .toArray(String[]::new);
-                return org.springframework.security.core.userdetails.User
-                    .withUsername(usuario.getEmail())
-                    .password(usuario.getSenha())
-                    .roles(roles)
-                    .build();
-            })
-            .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado: " + username));
+    // Injetamos o UsuarioRepository diretamente pra passar pro CustomUserDetailsService
+    public SecurityConfig(UsuarioRepository usuarioRepository) {
+        this.usuarioRepository = usuarioRepository;
     }
 
     @Bean
@@ -43,23 +33,41 @@ public class SecurityConfig {
     }
 
     @Bean
+    public UserDetailsService userDetailsService() {
+        return new CustomUserDetailsService(usuarioRepository, passwordEncoder());
+    }
+
+    @Bean
+    public AuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(userDetailsService());
+        authProvider.setPasswordEncoder(passwordEncoder());
+        return authProvider;
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+        return authConfig.getAuthenticationManager();
+    }
+
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(csrf -> csrf.disable()) // Desativado para testes
+            .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(authorizeRequests -> 
                 authorizeRequests
-                    .requestMatchers("/", "/auths/cadastrar", "/css/**", "/img/**", "/js/**").permitAll() // URLs públicas
+                    .requestMatchers("/auths/cadastrar", "/css/**", "/img/**", "/js/**").permitAll()
                     .requestMatchers("/users/**").hasRole("ADMIN")
                     .requestMatchers("/authorities/**").hasRole("ADMIN")
-                    .requestMatchers("/home").hasAnyRole("USER", "ADMIN")
+                    .requestMatchers("/").hasAnyRole("USER", "ADMIN")
                     .anyRequest().authenticated()
             )
             .formLogin(form -> 
                 form
-                    .loginPage("/auths/login") // Página de login
-                    .loginProcessingUrl("/authenticate")
-                    .defaultSuccessUrl("/home", true) // Aqui você pode mudar para '/auths/login' se preferir
-                    .failureUrl("/auths/login?error") // Define explicitamente a URL de falha
+                    .loginPage("/auths/login")
+                    .loginProcessingUrl("/auths/login")
+                    .defaultSuccessUrl("/", true)
+                    .failureUrl("/auths/login?error")
                     .permitAll()
             )
             .logout(logout -> 
@@ -71,7 +79,8 @@ public class SecurityConfig {
             .exceptionHandling(exception -> 
                 exception
                     .accessDeniedPage("/access-denied")
-            );
+            )
+            .authenticationProvider(authenticationProvider());
 
         return http.build();
     }
