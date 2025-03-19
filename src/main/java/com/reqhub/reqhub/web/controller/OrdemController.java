@@ -1,16 +1,20 @@
 package com.reqhub.reqhub.web.controller;
 
 import com.reqhub.reqhub.domain.Ordem;
+import com.reqhub.reqhub.domain.Usuario;
+import com.reqhub.reqhub.repository.UsuarioRepository;
 import com.reqhub.reqhub.service.OrdemService;
-import java.util.Collections;
-import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Collections;
+import java.util.List;
 
 @Controller
 @RequestMapping("/ordens")
@@ -18,24 +22,43 @@ public class OrdemController {
 
     private static final Logger logger = LoggerFactory.getLogger(OrdemController.class);
 
-    @Autowired
-    private OrdemService ordemService;
+    @Autowired private OrdemService ordemService;
+    @Autowired private UsuarioRepository usuarioRepository;
 
     @GetMapping("/comentario")
     public String comentario(Model model) {
         logger.info("Acessando página de cadastro de ordem em /ordens/comentario");
         model.addAttribute("ordem", new Ordem());
-        return "ordem/comentario";
+        return "ordem/comentario"; // Aponta pra templates/ordens/comentario.html
     }
 
     @PostMapping("/comentario")
-    public ResponseEntity<String> cadastrarOrdem(@RequestBody OrdemRequest ordemRequest) {
+    @ResponseBody
+    public ResponseEntity<String> cadastrarOrdem(@RequestBody OrdemRequest ordemRequest, Authentication authentication) {
         logger.info("Recebido POST para /ordens/comentario: {}", ordemRequest);
         try {
+            if (authentication == null || !authentication.isAuthenticated()) {
+                logger.error("Nenhum usuário autenticado encontrado");
+                throw new IllegalStateException("Usuário não autenticado");
+            }
+
+            String email = authentication.getName();
+            logger.info("Email do usuário autenticado: {}", email);
+
+            Usuario usuario = usuarioRepository.findByEmail(email);
+            if (usuario == null) {
+                logger.error("Usuário não encontrado no banco para o email: {}", email);
+                throw new IllegalStateException("Usuário autenticado não encontrado: " + email);
+            }
+            logger.info("Usuário encontrado: {}", usuario.getNome());
+
             Ordem ordem = new Ordem();
+            ordem.setUsuario(usuario);
             ordem.setAssunto(ordemRequest.getAssunto());
             ordem.setDescricao(ordemRequest.getDescricao());
-            ordemService.salvarOrdem(ordem, ordemRequest.getNomeUsuario());
+            logger.info("Ordem criada: assunto={}, descricao={}", ordem.getAssunto(), ordem.getDescricao());
+
+            ordemService.salvarOrdem(ordem);
             logger.info("Ordem salva com sucesso, ID: {}", ordem.getId());
             return ResponseEntity.ok(ordem.getId().toString());
         } catch (Exception e) {
@@ -44,7 +67,6 @@ public class OrdemController {
         }
     }
 
-    // Redireciona GET /ordens/pesquisa para a página HTML
     @GetMapping("/pesquisa")
     public String redirecionarPesquisa() {
         return "ordem/pesquisa";
@@ -68,23 +90,22 @@ public class OrdemController {
         return ResponseEntity.ok(ordens);
     }
 
+    // Classe interna OrdemRequest
     public static class OrdemRequest {
         private String assunto;
         private String descricao;
-        private String nomeUsuario;
 
         public String getAssunto() { return assunto; }
         public void setAssunto(String assunto) { this.assunto = assunto; }
         public String getDescricao() { return descricao; }
         public void setDescricao(String descricao) { this.descricao = descricao; }
-        public String getNomeUsuario() { return nomeUsuario; }
-        public void setNomeUsuario(String nomeUsuario) { this.nomeUsuario = nomeUsuario; }
         @Override
         public String toString() {
-            return "OrdemRequest{assunto='" + assunto + "', descricao='" + descricao + "', nomeUsuario='" + nomeUsuario + "'}";
+            return "OrdemRequest{assunto='" + assunto + "', descricao='" + descricao + "'}";
         }
     }
 
+    // Classe interna PesquisaRequest
     public static class PesquisaRequest {
         private Long id;
         private String nome;

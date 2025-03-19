@@ -38,32 +38,35 @@
 
             <section class="container text-center mt-5">
                 <div class="row">
-                    <!-- Card de Criar Usuário -->
+                    <!-- Card de Abrir Requisição -->
                     <div class="col-md-4 mb-4">
                         <div class="card">
+                         <h5 class="card-title">Abrir Requisição</h5>
                             <img src="/img/req.png" class="card-img-top" alt="Criar Usuário" />
                             <div class="card-body">
-                                <h5 class="card-title">Abrir Requisição</h5>
+                                <a th:href="@{/ordens/comentario}" class="btn btn-primary">Abrir</a>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Card de Registrar Feedback -->
+                    <!-- Card de Consultar suas Requisições -->
                     <div class="col-md-4 mb-4">
-                        <div class="card">
+                        <div class="card">  
+                        <h5 class="card-title">Suas Requisições</h5>                      
                             <img src="/img/sreq.png" class="card-img-top" alt="Registrar Feedback" />
                             <div class="card-body">
-                                <h5 class="card-title">Suas Requisições</h5>
+                            <a th:href="@{/users/cadastrar}" class="btn btn-primary">Consultar</a>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Card de Consultar Feedback -->
+                    <!-- Card de Central de Requisições -->
                     <div class="col-md-4 mb-4">
                         <div class="card">
+                        <h5 class="card-title">Central de Requisições</h5>
                             <img src="/img/creq.png" class="card-img-top" alt="Consultar Feedback" />
                             <div class="card-body">
-                                <h5 class="card-title">Central de Requisições</h5>
+                                <a th:href="@{/users/cadastrar}" class="btn btn-primary">Buscar</a>
                             </div>
                         </div>
                     </div>
