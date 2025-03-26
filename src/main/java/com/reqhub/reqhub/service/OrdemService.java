@@ -1,6 +1,7 @@
 package com.reqhub.reqhub.service;
 
 import com.reqhub.reqhub.domain.Ordem;
+import com.reqhub.reqhub.domain.Usuario;
 import com.reqhub.reqhub.repository.OrdemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -25,7 +26,15 @@ public class OrdemService {
         return ordemRepository.findByUsuarioNome(nomeUsuario, Sort.by(Sort.Direction.DESC, "dataCriacao"));
     }
 
+    public List<Ordem> buscarOrdensPorUsuario(Usuario usuario) {
+        return ordemRepository.findByUsuarioNome(usuario.getNome(), Sort.by(Sort.Direction.DESC, "dataCriacao"));
+    }
+
     public List<Ordem> listarTodasOrdens() {
         return ordemRepository.findAll(Sort.by(Sort.Direction.DESC, "dataCriacao"));
+    }
+
+    public void excluirOrdem(Long id) {
+        ordemRepository.deleteById(id);
     }
 }

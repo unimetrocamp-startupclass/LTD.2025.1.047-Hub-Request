@@ -1,35 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+.ml-auto{
+ margin-right: 20px;	
+}
+
 .navbar-brand {
-    font-size: 30px; /* Ajuste o tamanho da fonte conforme necessário */
+    font-size: 30px;
 }
 
 .introduction {
-	    margin-left: 30vw;  /* 5% da largura da viewport */
-    margin-right: 30vw; /* 5% da largura da viewport */
+    margin-left: 30vw;
+    margin-right: 30vw;
     margin-top: 2vw;
 }
 
-.btn-primary{
- background-color: #1A2E35;
+.btn-primary {
+    background-color: #1A2E35;
 }
 
 .card {
-    border-radius: 70px; /* Arredonda os cantos da box */
-    overflow: hidden; /* Evita que o conteúdo ultrapasse as bordas */
-    border: 2px solid #ddd; /* Adiciona uma borda sutil */
-    padding: 10px; /* Espaçamento interno */
-    background-color: white; /* Garante um fundo visível */
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); /* Sombra para destacar */
-    
+    border-radius: 70px;
+    overflow: hidden;
+    border: 2px solid #ddd;
+    padding: 10px;
+    background-color: white;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 }
 
 #specific-img {
-  width: 50%;
-  height: auto;
+    width: 50%;
+    height: auto;
 }
 
 .btn.btn-primary {
- border-radius: 25px;
+    border-radius: 25px;
 }
-
-
 

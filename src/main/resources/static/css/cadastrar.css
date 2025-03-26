@@ -1,3 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+
 html, body {
     height: 100%;
 }
@@ -6,6 +13,10 @@ body {
     display: flex;
     flex-direction: column;
     background-color: #f8f9fa;
+}
+
+.ml-auto{
+ margin-right: 20px;	
 }
 
 .container {
@@ -34,5 +45,15 @@ footer {
     background-color: #1A2E35;
 }
 
+.action-icon {
+    margin-right: 10px; /* Espaço entre as imagens */
+    text-decoration: none; /* Remove sublinhado */
+}
+
+.action-icon img {
+    width: 24px; /* Tamanho padrão, ajuste conforme o tamanho das suas imagens */
+    height: 24px;
+    vertical-align: middle; /* Alinha a imagem verticalmente */
+}
 
    

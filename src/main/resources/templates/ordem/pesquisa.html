@@ -1,56 +1,43 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
     <link rel="icon" href="/img/icon.png" type="image/x-icon">
-    <title>ReqHub - Pesquisar Ordens</title>
+    <title>ReqHub - Minhas Ordens</title>
     <link rel="stylesheet" href="/css/cadastrar.css" />
 </head>
-
 <body>
     <header>
         <nav class="navbar navbar-dark bg-dark">
-            <a class="navbar-brand" href="/">
+            <a class="navbar-brand" href="/users/homeL">
                 <img src="/img/icon.png" width="50" height="50" class="d-inline-block align-top" style="margin-left: 5vw;" alt="">
                 ReqHub
             </a>
             <div class="ml-auto">
-                <a href="#" class="navbar-brand">
-                    <img src="/img/iconadmin.png" width="40" height="40" class="d-inline-block align-top" alt="Icon Direita">
-                    <span class="ml-2" style="font-size: 20px;">Admin</span>
+                <a th:href="@{/logout}" class="navbar-brand">
+                    <span class="ml-2" style="font-size: 20px;">Sair</span>
                 </a>
             </div>
         </nav>
     </header>
 
     <div class="container mt-5">
-        <h2>Buscar Feedback</h2>
-
-        <!-- Formulário de Busca -->
-        <form id="buscarFeedbackForm" onsubmit="buscarFeedback(event)">
-            <div class="mb-3">
-                <label for="id" class="form-label">ID da Ordem:</label>
-                <input type="number" id="id" name="id" class="form-control" placeholder="Digite o ID da ordem">
-            </div>
-            <div class="mb-3">
-                <label for="nome" class="form-label">Nome do Usuário:</label>
-                <input type="text" id="nome" name="nome" class="form-control" placeholder="Digite o nome do usuário">
-            </div>
-            <button type="submit" class="btn btn-primary">Buscar</button>
-        </form>
-
-        <!-- Área para mostrar o resultado da busca -->
-        <div id="resultadoFeedback" class="mt-4">
+      <a th:href="@{/users/homeL}" class="btn btn-link text-dark mb-3">
+            <i class="bi bi-arrow-left me-2"></i>Voltar para a Home
+        </a>
+        <h2>Minhas Ordens</h2>
+        <div id="resultadoOrdens" class="mt-4">
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Assunto</th>
                         <th>Descrição</th>
                         <th>Status</th>
-                        <th>Usuário</th>
+                        <th>Atendente</th>
+                        <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody id="ordensTable"></tbody>
@@ -64,58 +51,46 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        function buscarFeedback(event) {
-            event.preventDefault();
-
-            const id = document.getElementById("id").value;
-            const nome = document.getElementById("nome").value;
-            let request = {};
-
-            // Só envia a requisição se pelo menos um campo estiver preenchido
-            if (id || nome) {
-                if (id) request.id = parseInt(id);
-                if (nome) request.nome = nome;
-
-                fetch('/ordens/pesquisa', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(request)
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Erro na busca: ' + response.status);
-                    }
-                    return response.json();
-                })
-                .then(ordens => {
-                    const tbody = document.getElementById("ordensTable");
-                    tbody.innerHTML = "";
-                    if (ordens.length === 0) {
-                        tbody.innerHTML = '<tr><td colspan="5" class="text-center">Nenhuma ordem encontrada</td></tr>';
-                    } else {
-                        ordens.forEach(ordem => {
-                            tbody.innerHTML += `
-                                <tr>
-                                    <td>${ordem.id}</td>
-                                    <td>${ordem.assunto}</td>
-                                    <td>${ordem.descricao}</td>
-                                    <td>${ordem.status}</td>
-                                    <td>${ordem.usuario.nome}</td>
-                                </tr>`;
-                            });
-                        }
-                    })
-                    .catch(error => {
-                        console.error("Erro:", error);
-                        document.getElementById("ordensTable").innerHTML = 
-                            '<tr><td colspan="5" class="text-center">Erro ao buscar ordens: ' + error.message + '</td></tr>';
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch('/ordens/minhas-ordens', {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' }
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Erro ao listar ordens: ' + response.status);
+                return response.json();
+            })
+            .then(ordens => {
+                const tbody = document.getElementById("ordensTable");
+                tbody.innerHTML = "";
+                if (ordens.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="5" class="text-center">Nenhuma ordem encontrada</td></tr>';
+                } else {
+                    ordens.forEach(ordem => {
+                        tbody.innerHTML += `
+                            <tr>
+                                <td>${ordem.assunto}</td>
+                                <td>${ordem.descricao}</td>
+                                <td>${ordem.status}</td>
+                                <td>${ordem.atendente ? ordem.atendente.nome : 'Não atribuído'}</td>
+                                <td>
+                                    <a href="/ordens/editar/${ordem.id}" class="action-icon" title="Editar"> 
+                                     <img src="/img/edit.png" alt="Editar">
+                                    </a>
+                                    <a href="/ordens/excluir/${ordem.id}" class="action-icon" title="Excluir">
+                                    <img src="/img/delete.png" alt="Excluir">
+                                    </a>
+                                </td>
+                            </tr>`;
                     });
-            } else {
-                // Se ambos os campos estiverem vazios, limpa a tabela
+                }
+            })
+            .catch(error => {
+                console.error("Erro:", error);
                 document.getElementById("ordensTable").innerHTML = 
-                    '<tr><td colspan="5" class="text-center">Por favor, insira um ID ou nome para buscar</td></tr>';
-            }
-        }
+                    '<tr><td colspan="5" class="text-center">Erro ao carregar ordens: ' + error.message + '</td></tr>';
+            });
+        });
     </script>
 </body>
 </html>
