@@ -33,6 +33,9 @@ public class OrdemService {
     public List<Ordem> listarTodasOrdens() {
         return ordemRepository.findAll(Sort.by(Sort.Direction.DESC, "dataCriacao"));
     }
+    public List<Ordem> buscarTodasOrdens() {
+        return ordemRepository.findAll();
+    }
 
     public void excluirOrdem(Long id) {
         ordemRepository.deleteById(id);

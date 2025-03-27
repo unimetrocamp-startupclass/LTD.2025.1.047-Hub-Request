@@ -4,6 +4,7 @@ import com.reqhub.reqhub.domain.Ordem;
 import com.reqhub.reqhub.domain.Usuario;
 import com.reqhub.reqhub.repository.UsuarioRepository;
 import com.reqhub.reqhub.service.OrdemService;
+import com.reqhub.reqhub.web.dto.OrdemDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/ordens")
@@ -26,7 +28,7 @@ public class OrdemController {
 
     @GetMapping("/comentario")
     public String comentario(Model model) {
-        logger.info("Acessando página de cadastro de ordem em /ordem/comentario");
+        logger.info("Acessando página de cadastro de ordem em /ordens/comentario");
         model.addAttribute("ordem", new Ordem());
         return "ordem/comentario";
     }
@@ -34,7 +36,7 @@ public class OrdemController {
     @PostMapping("/comentario")
     @ResponseBody
     public ResponseEntity<String> cadastrarOrdem(@RequestBody OrdemRequest ordemRequest, Authentication authentication) {
-        logger.info("Recebido POST para /ordem/comentario: {}", ordemRequest);
+        logger.info("Recebido POST para /ordens/comentario: {}", ordemRequest);
         try {
             String email = authentication.getName();
             Usuario usuario = usuarioRepository.findByEmail(email);
@@ -86,7 +88,7 @@ public class OrdemController {
                 throw new IllegalStateException("Você não tem permissão para editar esta ordem");
             }
             model.addAttribute("ordem", ordem);
-            return "ordem/editar";
+            return "ordens/editar";
         } catch (Exception e) {
             logger.error("Erro ao carregar ordem para edição: {}", e.getMessage(), e);
             return "ordem/pesquisa";
@@ -130,7 +132,7 @@ public class OrdemController {
                 throw new IllegalStateException("Você não tem permissão para excluir esta ordem");
             }
             model.addAttribute("ordem", ordem);
-            return "ordem/excluir";
+            return "ordens/excluir";
         } catch (Exception e) {
             logger.error("Erro ao carregar ordem para exclusão: {}", e.getMessage(), e);
             return "ordem/excluir";
@@ -156,6 +158,38 @@ public class OrdemController {
         } catch (Exception e) {
             logger.error("Erro ao excluir ordem: {}", e.getMessage(), e);
             return ResponseEntity.status(500).body("Erro ao excluir: " + e.getMessage());
+        }
+    }
+
+    // Novo método pra carregar a página ordens/central.html
+    @GetMapping("/central")
+    public String central(Model model) {
+        logger.info("Acessando página da central de requisições em /ordem/central");
+        return "ordem/central";
+    }
+
+    // Novo método pra fornecer dados pra ordens/central.html
+    @GetMapping("/central-requisicoes")
+    @ResponseBody
+    public ResponseEntity<List<OrdemDTO>> listarCentralRequisicoes(Authentication authentication) {
+        logger.info("Listando central de requisições");
+        try {
+            String email = authentication.getName();
+            Usuario usuario = usuarioRepository.findByEmail(email);
+            if (usuario == null) throw new IllegalStateException("Usuário autenticado não encontrado: " + email);
+            List<Ordem> ordens = ordemService.buscarTodasOrdens();
+            List<OrdemDTO> ordensDTO = ordens.stream()
+                .map(ordem -> new OrdemDTO(
+                    ordem.getAssunto(),
+                    ordem.getDescricao(),
+                    ordem.getSolucao(),
+                    ordem.getAtendente() != null ? ordem.getAtendente().getUsuario().getNome() : null
+                ))
+                .collect(Collectors.toList());
+            return ResponseEntity.ok(ordensDTO);
+        } catch (Exception e) {
+            logger.error("Erro ao listar central: {}", e.getMessage(), e);
+            return ResponseEntity.status(500).build();
         }
     }
 

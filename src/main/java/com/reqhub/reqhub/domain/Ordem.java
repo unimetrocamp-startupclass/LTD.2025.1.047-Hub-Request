@@ -13,7 +13,7 @@ public class Ordem extends AbstractEntity<Long> {
     private Usuario usuario;
 
     @Column(nullable = false)
-    private String assunto; // Adicionado conforme sua necessidade
+    private String assunto;
 
     @Column(nullable = false)
     private String descricao;
@@ -24,6 +24,13 @@ public class Ordem extends AbstractEntity<Long> {
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime dataCriacao;
+
+    @Column
+    private String solucao;
+
+    @ManyToOne
+    @JoinColumn(name = "atendente_id")
+    private Authority atendente; // Alterado de Usuario para Authority
 
     public Ordem() {
         this.dataCriacao = LocalDateTime.now();
@@ -39,4 +46,8 @@ public class Ordem extends AbstractEntity<Long> {
     public StatusOrdem getStatus() { return status; }
     public void setStatus(StatusOrdem status) { this.status = status; }
     public LocalDateTime getDataCriacao() { return dataCriacao; }
+    public String getSolucao() { return solucao; }
+    public void setSolucao(String solucao) { this.solucao = solucao; }
+    public Authority getAtendente() { return atendente; }
+    public void setAtendente(Authority atendente) { this.atendente = atendente; }
 }
