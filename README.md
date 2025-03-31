@@ -1,7 +1,10 @@
 # ReqHub - Sistema de Gerenciamento de Solicitações
 
-Bem-vindo ao **ReqHub**, um sistema desenvolvido para gerenciar solicitações e melhorias no ambiente do SIMECC. O objetivo é permitir que usuários relatem problemas, façam sugestões e acompanhem o status de suas ordens de forma simples e eficiente. O sistema suporta diferentes tipos de usuários, como administradores e atendentes, com funcionalidades específicas para cada perfil.
+Aqui está a versão ajustada do seu texto:  
 
+**Bem-vindo ao ReqHub!** Um sistema de **Help Desk** desenvolvido para otimizar a gestão de solicitações e melhorias dentro da empresa. Com o ReqHub, os usuários podem relatar problemas, sugerir melhorias e acompanhar o status de suas solicitações de forma prática e eficiente, eliminando a necessidade de comunicação por e-mail. O sistema conta com diferentes perfis de usuários, como administradores e atendentes, garantindo funcionalidades específicas para cada necessidade.  
+
+Se precisar de mais ajustes, é só me avisar! 😊
 ## Funcionalidades
 
 - **Cadastro de Usuários:**
