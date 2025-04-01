@@ -51,7 +51,7 @@
 1. **Clone o repositório:**
    ```bash
    git clone <URL_DO_REPOSITORIO>
-   cd reqhub ```````
+   cd reqhub 
 
 
 
