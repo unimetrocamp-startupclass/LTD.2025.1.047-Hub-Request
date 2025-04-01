@@ -5,22 +5,24 @@
 
 ## Funcionalidades
 
-- **Cadastro de Usuários:**
-  - Usuários comuns podem se cadastrar fornecendo nome, email, ramal e setor.
-  - Administradores têm um cadastro restrito, autenticado por um código de acesso (`******`), e não precisam de email, ramal ou setor (valores padrão são aplicados).
+### Cadastro de Usuários
+- Qualquer usuário pode se cadastrar fornecendo **nome, email, ramal, senha e setor**.
 
-- **Gerenciamento de Ordens:**
-  - Criação de ordens (chamados) com descrição e status (ex.: "PENDENTE", "RESOLVIDA").
-  - Associação de ordens a usuários específicos.
-  - Consulta de ordens abertas para encontrar o usuário responsável.
+### Login
+- O acesso ao sistema é feito por meio de **email e senha**.
 
-- **Administração:**
-  - Interface para administradores acessarem o sistema via login.
-  - Gestão de setores e usuários pelo admin.
+### Gerenciamento de Ordens
+- Criação de ordens (chamados) com descrição e status (ex.: "PENDENTE", "RESOLVIDA").
+- Associação de ordens a usuários específicos.
+- Consulta de ordens abertas para encontrar o usuário responsável.
 
-- **Frontend:**
-  - Interface web com páginas HTML usando Thymeleaf e estilização com Bootstrap.
-  - Formulários interativos para cadastro e criação de ordens, enviando dados em formato JSON via AJAX.
+### Administração
+- Interface para administradores acessarem o sistema via login.
+- Gestão de setores e usuários pelo admin.
+
+### Frontend
+- Interface web com páginas HTML usando Thymeleaf e estilização com Bootstrap.
+- Formulários interativos para cadastro e criação de ordens, enviando dados em formato JSON via AJAX.
 
 ## Tecnologias Utilizadas
 
