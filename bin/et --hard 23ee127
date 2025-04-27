@@ -1,0 +1,18 @@
+* [33m04d91ad[m[33m ([m[1;31morigin/main[m[33m)[m Adicionei o security, agora estou começando a mexer nos controllers, domain, sercive e repository. ate no momento as mudanças de codigo deram certo mais nao testei o linke das paginas.
+* [33m23ee127[m Crei a pagina de login e likei ela, creiei o controller mas so pra direcionar a pagina , vou começar a merche com a parte de security
+* [33m9e32736[m[33m ([m[1;36mHEAD -> [m[1;32mnovo-branch[m[33m, [m[1;32mmain[m[33m)[m Ok, até o momento, apresentei o projeto para o gestor e ele gostou. No entanto, sugeriu algumas mudanças, como adicionar uma parte de segurança para interagir com o AD (Active Directory), pensar em uma API para o AD e criar um fórum para pesquisa de chamados já abertos. Decidi começar pela página HTML da home e pensei em criar um passo a passo resumido explicando como o sistema funciona. Agora, vou trabalhar na tela de login e, em seguida, vou estudar algumas aulas para aprender como implementar a segurança no sistema.
+* [33mc3e1e37[m Corrigi a página de pesquisa das ordens e agora estou planejando organizar a área do **admin**. Atualmente, existe apenas o cadastro de usuários, sem uma página de **login**, então preciso aprimorar essa parte.
+* [33me68eef6[m Update README.md
+* [33m01b9234[m Update README.md
+* [33m05054b9[m Update README.md
+* [33m3b2e2d7[m Create README.md
+* [33mb5d79c8[m Corrigi o cadastro de usuário no banco de dados. O problema estava nos campos **e-mail** e **ramal**, que são obrigatórios. Implementei um **if** para permitir que alguns campos sejam **nulos**, e agora o **e-mail é gerado automaticamente**.
+* [33m6134a2d[m Ajustei o envio da requisição, mas ainda preciso renomear os campos no HTML. Fiz alterações no **Controller, Service, Repository** e na classe, garantindo a vinculação correta das tabelas. Até o momento, o envio dos dados no formato **JSON** está funcionando corretamente, tanto no **Postman** quanto no próprio site.
+* [33me3fccfe[m Ajustei o envio do formulário de cadastro de usuário, que não estava cadastrando no banco de dados. No Postman funcionava corretamente, mas identifiquei um problema no Controller e no Service, o que já era esperado. Também fiz ajustes no HTML.
+* [33m7c75468[m Corrigi o cadastro de setores e implementei um script no HTML, pois o envio no formato JSON não estava funcionando. Agora, preciso revisar o cadastro de usuários. Tive uma ideia de melhoria: criar uma navbar semelhante à do Fernando, desenvolvendo um HTML separado para a navbar e o footer, e depois importá-los em todas as páginas.
+* [33m4b4740a[m Finalize os controllers, services e outros componentes, mas estou enfrentando um problema com o JSON. Acho que a origem do erro pode estar no formulário HTML. Preciso investigar isso com mais atenção.
+* [33m82e8234[m Criei o repository e o controller, mas acho que ainda precisam de refinamento. Não realizei testes ainda. Também pensei em algo para o atendente e comecei a implementar.
+* [33m70db2cb[m  criei a entitys que faltava, mechi um pouco no dao mas ainda nao entedi bem o qu ele faz, o deep criou alguns para mim mas não sei se vou usar
+* [33m654c5dc[m  criei os htmls praticamente todos, arrumei o pom, linkei as paginas, comecei um entity e fiz dois controllers
+* [33m73fc06c[m Fiz  home , porem nao consgui link o html do cadastro, fiz o controller do user mas acho q nao esta correto
+* [33m6824c37[m Primeiro commit - adicionando o projeto ReqHub
