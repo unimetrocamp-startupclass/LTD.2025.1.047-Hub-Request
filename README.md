@@ -2,10 +2,10 @@
 
 ## Informações do Projeto
 
-**Cliente**: <razão social/nome do cliente>  
-**CNPJ/CPF**: <CNPJ/CPF do cliente>  
-**Contato**: <nome do contato>  
-**Email do contato**: <email do contato>  
+**Cliente**: Fracieli Soares de Oliveira  
+**CNPJ/CPF**: 042563141/99  
+**Contato**: 66999133490  
+**Email do contato**: francielisoaresbeautystudio@gmail.com  
 
 ### Equipe
 
