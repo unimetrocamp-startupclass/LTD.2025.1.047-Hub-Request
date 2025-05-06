@@ -1,25 +1,28 @@
 # ReqHub - Sistema de Gerenciamento de Solicitações
 
-Bem-vindo ao **ReqHub**, um sistema desenvolvido para gerenciar solicitações e melhorias no ambiente do SIMECC. O objetivo é permitir que usuários relatem problemas, façam sugestões e acompanhem o status de suas ordens de forma simples e eficiente. O sistema suporta diferentes tipos de usuários, como administradores e atendentes, com funcionalidades específicas para cada perfil.
+**Bem-vindo ao ReqHub!** Um sistema de **Help Desk** desenvolvido para otimizar a gestão de solicitações e melhorias dentro da empresa. Com o ReqHub, os usuários podem relatar problemas, sugerir melhorias e acompanhar o status de suas solicitações de forma prática e eficiente, eliminando a necessidade de comunicação por e-mail. O sistema conta com diferentes perfis de usuários, como administradores e atendentes, garantindo funcionalidades específicas para cada necessidade.  
+
 
 ## Funcionalidades
 
-- **Cadastro de Usuários:**
-  - Usuários comuns podem se cadastrar fornecendo nome, email, ramal e setor.
-  - Administradores têm um cadastro restrito, autenticado por um código de acesso (`******`), e não precisam de email, ramal ou setor (valores padrão são aplicados).
+### Cadastro de Usuários
+- Qualquer usuário pode se cadastrar fornecendo **nome, email, ramal, senha e setor**.
 
-- **Gerenciamento de Ordens:**
-  - Criação de ordens (chamados) com descrição e status (ex.: "PENDENTE", "RESOLVIDA").
-  - Associação de ordens a usuários específicos.
-  - Consulta de ordens abertas para encontrar o usuário responsável.
+### Login
+- O acesso ao sistema é feito por meio de **email e senha**.
 
-- **Administração:**
-  - Interface para administradores acessarem o sistema via login.
-  - Gestão de setores e usuários pelo admin.
+### Gerenciamento de Ordens
+- Criação de ordens (chamados) com descrição e status (ex.: "PENDENTE", "RESOLVIDA").
+- Associação de ordens a usuários específicos.
+- Consulta de ordens abertas para encontrar o usuário responsável.
 
-- **Frontend:**
-  - Interface web com páginas HTML usando Thymeleaf e estilização com Bootstrap.
-  - Formulários interativos para cadastro e criação de ordens, enviando dados em formato JSON via AJAX.
+### Administração
+- Interface para administradores acessarem o sistema via login.
+- Gestão de setores e usuários pelo admin.
+
+### Frontend
+- Interface web com páginas HTML usando Thymeleaf e estilização com Bootstrap.
+- Formulários interativos para cadastro e criação de ordens, enviando dados em formato JSON via AJAX.
 
 ## Tecnologias Utilizadas
 
@@ -48,7 +51,7 @@ Bem-vindo ao **ReqHub**, um sistema desenvolvido para gerenciar solicitações e
 1. **Clone o repositório:**
    ```bash
    git clone <URL_DO_REPOSITORIO>
-   cd reqhub ```````
+   cd reqhub 
 
 
 
