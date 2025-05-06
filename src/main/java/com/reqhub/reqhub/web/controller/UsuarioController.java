@@ -54,3 +54,4 @@ public class UsuarioController {
         return "redirect:/auths/login";
     }
 }
+

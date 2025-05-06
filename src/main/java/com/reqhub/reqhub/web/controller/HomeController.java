@@ -10,4 +10,8 @@ public class HomeController {
  public String home() {
 	 return "/home";
  }
+	@GetMapping("/atendente/home-atendente") // Rota igual ao redirect do SecurityConfig
+	public String homeAdmin() {
+	    return "atendente/home-atendente"; // Caminho RELATIVO sem barra inicial
+	}
 }
