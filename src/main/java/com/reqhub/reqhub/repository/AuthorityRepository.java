@@ -10,8 +10,12 @@ import java.util.Optional;
 
 @Repository
 public interface AuthorityRepository extends JpaRepository<Authority, Long> {
-    List<Authority> findByUsuario(Usuario usuario);
+List<Authority> findByUsuario(Usuario usuario);
+
+Optional<Authority> findByUsuarioAndAuthority(Usuario usuario, String authority);
 
     // Adicione este método:
-    Optional<Authority> findByUsuarioAndAuthority(Usuario usuario, String authority);
+    List<Authority> findByUsuarioId(Long usuarioId);
+
+    Optional<Authority> findByUsuarioIdAndAuthority(Long usuarioId, String authority);
 }

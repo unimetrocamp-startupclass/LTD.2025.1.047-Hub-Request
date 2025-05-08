@@ -1,7 +1,7 @@
 package com.reqhub.reqhub.security;
 
 import com.reqhub.reqhub.domain.Usuario;
-import com.reqhub.reqhub.repository.AuthorityRepository; // Adicione a injeção do AuthorityRepository
+import com.reqhub.reqhub.repository.AuthorityRepository;
 import com.reqhub.reqhub.repository.UsuarioRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -13,7 +13,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,7 +22,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     private final UsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;
-    private final AuthorityRepository authorityRepository; // Injete o AuthorityRepository
+    private final AuthorityRepository authorityRepository;
 
     public CustomUserDetailsService(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository) {
         this.usuarioRepository = usuarioRepository;
@@ -34,11 +33,11 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         System.out.println("Tentando carregar usuário com email: " + email);
-        Usuario usuario = usuarioRepository.findByEmail(email);
-        if (usuario == null) {
-            System.out.println("Usuário não encontrado para email: " + email);
-            throw new UsernameNotFoundException("Usuário não encontrado");
-        }
+        Usuario usuario = usuarioRepository.findByEmail(email)
+                .orElseThrow(() -> { // Trata o Optional
+                    System.out.println("Usuário não encontrado para email: " + email);
+                    return new UsernameNotFoundException("Usuário não encontrado");
+                });
         System.out.println("Usuário encontrado: " + usuario.getEmail() + ", senha: " + usuario.getSenha());
 
         List<GrantedAuthority> authorities = authorityRepository.findByUsuario(usuario).stream()
