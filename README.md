@@ -1,89 +1,123 @@
-# Hub Request – Sistema de Gerenciamento de Requisições
+Perfeito! Aqui está uma versão do `README.md` que segue exatamente a estrutura e o conteúdo da sua documentação original:
 
-## Informações do Projeto
+---
 
-**Cliente**: Fracieli Soares de Oliveira  
-**CNPJ/CPF**: 042563141/99  
-**Contato**: 66999133490  
-**Email do contato**: francielisoaresbeautystudio@gmail.com  
+# 📚 Hub Request – Sistema de Gerenciamento de Requisições
 
-### Equipe
+## Dados do Cliente
 
-| Nome Completo                              | Curso                                   | Disciplina |
-|--------------------------------------------|-----------------------------------------|------------|
-| André Lucas Martins Ezequiel              | Ciência da Computação                  | ARA 00110  |
-| Beatriz Colombo de Oliveira               | Análise e Desenvolvimento de Sistemas   | ARA 00110  |
-| Jennifer de Oliveira                      | Ciência da Computação                  | ARA 00110  |
-| Pedro Henrique da Silva dos Santos       | Ciência da Computação                  | ARA 00110  |
+* **Título do Projeto:** Hub Request – Sistema de Gerenciamento de Requisições
+* **Cliente:** Fracieli Soares de Oliveira
+* **CNPJ/CPF:** 042563141/99
+* **Contato:** (66) 99913-3490
+* **Email:** [francielisoaresbeautystudio@gmail.com](mailto:francielisoaresbeautystudio@gmail.com)
 
-**Professor Orientador**: Kesede Rodrigues Julio
+## Equipe de Desenvolvimento
 
-## Contexto e Problema
+| Nome                               | Curso                                 | Disciplina |
+| ---------------------------------- | ------------------------------------- | ---------- |
+| André Lucas Martins Ezequiel       | Ciência da Computação                 | ARA 00110  |
+| Beatriz Colombo de Oliveira        | Análise e Desenvolvimento de Sistemas | ARA 00110  |
+| Jennifer de Oliveira               | Ciência da Computação                 | ARA 00110  |
+| Pedro Henrique da Silva dos Santos | Ciência da Computação                 | ARA 00110  |
 
-O cliente identificou a necessidade de melhorar o processo de abertura e gerenciamento de chamados técnicos de TI, que atualmente é realizado de forma desorganizada, majoritariamente via e-mail ou telefone, dificultando o controle e acompanhamento das solicitações.
+**Professor Orientador:** Kesede Rodrigues Julio
 
-## Solução Proposta
+## 1. Introdução
 
-Para resolver este problema, será desenvolvido o **Hub Request**, um sistema de Help Desk especializado para o setor de Tecnologia da Informação (TI). O sistema permitirá a abertura de chamados, sugestões de melhorias e o acompanhamento do status das solicitações de maneira prática e centralizada.
+O Hub Request surgiu da necessidade de melhorar o processo de abertura e gerenciamento de chamados técnicos de TI, atualmente realizados de forma desorganizada. O sistema permitirá controle e acompanhamento de solicitações de maneira centralizada e eficiente.
 
-O sistema contará com diferentes perfis de usuário (administradores e atendentes), integrando funcionalidades como cadastro de usuários, gerenciamento de ordens de serviço e controle de setores.
+## 2. Objetivo
 
-## Tecnologias Utilizadas
+Desenvolver o sistema ReqHub para:
 
-A solução será implementada utilizando as seguintes tecnologias:
-- **Java 21** com **Spring Boot** para o backend.
-- **PostgreSQL** para persistência de dados.
-- **Thymeleaf** para o front-end.
-- **Bootstrap** para a construção de uma interface web responsiva.
+* Centralizar o gerenciamento de chamados
+* Reduzir tempo de resposta
+* Facilitar a gestão de demandas
+* Aumentar a rastreabilidade
 
-## Impacto
+## 3. Escopo
 
-O **Hub Request** trará mais agilidade, organização e rastreabilidade ao processo de suporte técnico da empresa, reduzindo falhas de comunicação e melhorando a eficiência no atendimento de TI.
+### Funcionalidades Principais:
 
-## Objetivo
+* Cadastro e autenticação de usuários
+* Gestão de chamados técnicos (PENDENTE, CONCLUÍDO, NÃO\_ATENDIDO)
+* Central de Requisições
 
-Desenvolver o sistema **Hub Request** para centralizar, organizar e otimizar o processo de abertura, gestão e acompanhamento de chamados técnicos de TI. O objetivo principal é substituir o atual método informal (e-mails, ligações e mensagens soltas) por uma plataforma única, eficiente e de fácil utilização, melhorando o controle, a comunicação e a rastreabilidade dos atendimentos internos.
+### Limitações:
 
-### Resultados Esperados
-- Reduzir o tempo de resposta para solicitações de TI.
-- Facilitar a gestão de demandas e a priorização dos atendimentos.
-- Proporcionar uma visão clara do status de cada chamado para usuários e atendentes.
-- Oferecer relatórios gerenciais que auxiliem na tomada de decisões do setor de TI.
+* Sem integração com sistemas externos (email, WhatsApp)
+* Sem upload de arquivos
+* Apenas versão web
+* Sem notificações automáticas
 
-## Escopo do Projeto
+## 4. Backlogs do Produto
 
-O escopo do projeto **Hub Request** abrange as funcionalidades e requisitos principais que serão implementados no sistema, bem como as limitações e o que não será abordado nesta versão.
+> \[Inserir aqui os requisitos levantados com cliente e equipe, conforme definido no Jira ou documentação interna.]
 
-### Requisitos Principais
+## 5. Cronograma
 
-1. **Cadastro e Autenticação de Usuários**  
-   O sistema permitirá o cadastro de usuários com informações essenciais como nome, e-mail, ramal, senha e setor. A autenticação será realizada por e-mail e senha, permitindo que o usuário acesse as funcionalidades do sistema de acordo com sua função (usuário ou administrador).
+| Sprint | Período                 | Atividades                          | Pontos | Resultados Esperados                       |
+| ------ | ----------------------- | ----------------------------------- | ------ | ------------------------------------------ |
+| 2      | 25/04/2025 - 02/05/2025 | Configuração do ambiente            | 17     | Projeto clonado, ambiente configurado      |
+| 3      | 05/05/2025 - 18/05/2025 | Modelagem, Gestão de Status, README | 18     | DER pronto, status backend implementado    |
+| 4      | 19/05/2025 - 01/06/2025 | Banco de dados, testes frontend     | 21     | Banco completo, testes iniciais            |
+| 5      | 02/06/2025 - 15/06/2025 | Painel admin, documentação, testes  | 19     | Painel implementado, documentação avançada |
 
-2. **Gestão de Chamados Técnicos**  
-   O sistema permitirá que os usuários abram chamados técnicos fornecendo um assunto (título) e uma descrição detalhada do problema ou solicitação. Esses chamados poderão ser classificados com três status: **PENDENTE**, **CONCLUÍDO** e **NÃO ATENDIDO**. A gestão desses chamados será realizada através de um painel de controle acessível aos administradores, que poderão alterar o status dos chamados e atribuir responsáveis.
+**Total:** 115 pontos (\~19 por sprint)
+**Feriados:** 01/05 e 19/06
 
-3. **Central de Requisição**  
-   Uma funcionalidade adicional será a central de requisição, onde os usuários poderão pesquisar problemas e soluções já registrados no sistema antes de abrirem um novo chamado. Isso ajudará a reduzir a duplicação de chamados e a otimizar o tempo de resolução.
+## 6. Materiais e Métodos
 
-### Limitações do Projeto (O que NÃO será Implementado)
+### Tecnologias Utilizadas
 
-- **Integração com sistemas externos**: Não será feita a integração com sistemas de notificação externos, como e-mails automáticos ou notificações via WhatsApp.
-- **Suporte a anexos**: O sistema não permitirá o envio de arquivos (como imagens ou documentos) junto aos chamados.
-- **Aplicativo Mobile**: O sistema será acessado exclusivamente via interface web, não havendo versão para dispositivos móveis.
-- **Notificações Automáticas**: O sistema não contará com envio automático de notificações sobre o status dos chamados, nem com alertas por e-mail.
+| Tecnologia  | Categoria           | Descrição                                       |
+| ----------- | ------------------- | ----------------------------------------------- |
+| Figma       | Design/Modelagem    | Protótipos e MER                                |
+| Freepik     | Recursos Visuais    | Imagens para interfaces e banner                |
+| Bootstrap   | Biblioteca Frontend | Estilização responsiva de formulários e tabelas |
+| Spring Boot | Backend             | API REST, controle de usuários e chamados       |
+| PostgreSQL  | Banco de Dados      | Persistência dos dados                          |
+| pgAdmin     | Gerenciador BD      | Acesso e manipulação do banco PostgreSQL        |
 
-## Cronograma do Projeto
+## 7. Resultados
 
-| Sprint | Período                    | Atividades Principais                                      | Pontos | Resultados Esperados                                      |
-|--------|----------------------------|------------------------------------------------------------|--------|----------------------------------------------------------|
-| Sprint 2 | 25/04/2025 - 02/05/2025 | Configurar ambiente (Eclipse, Java 21, PostgreSQL, Git)     | 17     | Ambiente configurado, projeto clonado e estudado.         |
-| Sprint 3 | 05/05/2025 - 18/05/2025 | Modelagem (DER), Gestão de Status (backend), Readme.md      | 18     | DER concluído, status implementado, documentação iniciada.|
-| Sprint 4 | 19/05/2025 - 01/06/2025 | Banco de dados, Gestão de Status (frontend), testes         | 21     | Banco implementado, status completo, testes iniciais.     |
-| Sprint 5 | 02/06/2025 - 15/06/2025 | Painel de Admin, documentação, testes                      | 19     | Painel implementado, documentação avançada, testes feitos.|
-| Sprint 6 | 16/06/2025 - 29/06/2025 | Gestão de Setores/Usuários, Relatórios (backend), slides    | 20     | Setores/usuários e relatórios iniciados, slides prontos.  |
-| Sprint 7 | 30/06/2025 - 13/07/2025 | Relatórios (frontend), testes finais, apresentação          | 20     | MVP testado, relatórios completos, apresentado na FENETEC.|
+> \[Inserir imagens das telas e seções do código com explicações.]
 
-### Notas
-- **Feriados**: 01/05/2025 (Sprint 2, 1 semana), 19/06/2025 (Sprint 6, 9 dias úteis).
-- **Total**: 115 pontos, média de ~19 pontos por sprint.
-- **Escopo**: Configuração, modelagem, implementação de Gestão de Status (REQ-4), Painel de Admin (REQ-6), Setores/Usuários (REQ-7), Relatórios (REQ-8), testes, documentação, e apresentação.
+## 8. Conclusão
+
+> \[Descrever o impacto positivo do sistema e melhorias futuras previstas.]
+
+## 9. Homologação do MVP
+
+> \[Inserir fotos, legendas e lista de presença.]
+
+## 10. Divulgação
+
+### LinkedIn
+
+> \[Inserir link e print do perfil do projeto no LinkedIn.]
+
+### Seminário de Projetos de Software
+
+> \[Inserir link do vídeo da apresentação e fotos do evento.]
+
+### FENETEC
+
+> \[Inserir link do vídeo da apresentação na feira e fotos do evento.]
+
+## 11. Carta de Apresentação
+
+> \[Inserir a carta conforme no documento.]
+
+## 12. Carta de Autorização
+
+> \[Inserir versão preenchida da carta de autorização.]
+
+## 13. Relato Individual do Processo
+
+> \[Cada integrante deve inserir um breve relato pessoal.]
+
+---
+
+Se quiser, posso gerar esse `README.md` em formato de arquivo para você baixar. Deseja que eu faça isso?
