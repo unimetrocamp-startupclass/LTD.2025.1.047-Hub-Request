@@ -1,7 +1,3 @@
-Perfeito! Aqui está uma versão do `README.md` que segue exatamente a estrutura e o conteúdo da sua documentação original:
-
----
-
 # 📚 Hub Request – Sistema de Gerenciamento de Requisições
 
 ## Dados do Cliente
