@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+        <link rel="icon" href="/img/icon.png" type="image/x-icon" />
+        <title>ReqHub - Login</title>
+        <link rel="stylesheet" href="/css/style.css" />
+        <style>
+            html, body { height: 100%; margin: 0; }
+            .login-container { min-height: 100vh; display: flex; justify-content: center; align-items: center; }
+        </style>
+    </head>
+    <body>
+        <header>
+            <nav class="navbar navbar-dark bg-dark">
+                <a class="navbar-brand" href="/">
+                    <img src="/img/icon.png" width="50" height="50" class="d-inline-block align-top" style="margin-left: 5vw;" alt="" />
+                    ReqHub
+                </a>
+            </nav>
+        </header>
+
+        <section class="login-container">
+            <div class="card" style="max-width: 600px; width: 100%;">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Fazer Login</h5>
+                    <form method="post" action="/auths/login">
+                        <div class="mb-3">
+                            <label for="email" class="form-label w-75 mx-auto d-block">Email</label>
+                            <input type="email" class="form-control w-75 mx-auto" id="email" name="username" required />
+                        </div>
+                        <div class="mb-3">
+                            <label for="senha" class="form-label w-75 mx-auto d-block">Senha</label>
+                            <input type="password" class="form-control w-75 mx-auto" id="senha" name="password" required />
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary" style="width: 30%;">Logar</button>
+                        </div>
+                    </form>
+
+                    <div class="text-center mt-3">
+                        <p>Ainda não possui conta? <a th:href="@{/auths/cadastrar}" class="text-primary">Clique aqui</a></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="bg-dark text-white text-center py-3">
+            <p>© 2025 ReqHub. Todos os direitos reservados.</p>
+        </footer>
+    </body>
+</html>
