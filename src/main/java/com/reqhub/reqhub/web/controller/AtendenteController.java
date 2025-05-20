@@ -26,6 +26,11 @@ public class AtendenteController {
     @Autowired
     private OrdemService ordemService;
 
+    @GetMapping("/")
+    public String ListOrders(Model model) {
+        // listar todas ordens
+    }
+
     @GetMapping("/pendentes")
     public String listarChamadosPendentes(Model model) {
         List<Ordem> ordensPendentes = ordemService.listarOrdensPorStatus("PENDENTE");

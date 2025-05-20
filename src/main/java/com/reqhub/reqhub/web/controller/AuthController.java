@@ -1,5 +1,4 @@
 package com.reqhub.reqhub.web.controller;
-
 import com.reqhub.reqhub.domain.Usuario;
 import com.reqhub.reqhub.repository.SetorRepository;
 import com.reqhub.reqhub.service.UsuarioService;

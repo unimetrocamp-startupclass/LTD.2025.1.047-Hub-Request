@@ -80,15 +80,16 @@ public class OrdemController {
         logger.info("Acessando página de edição da ordem: {}", id);
         try {
             String email = authentication.getName();
-            Usuario usuario = usuarioRepository.findByEmail(email)  // Modificado para Optional
-                    .orElseThrow(() -> new IllegalStateException("Usuário autenticado não encontrado: " + email));
+            Usuario usuario = usuarioRepository.findByEmail(email)
+                    .orElseThrow(() -> new IllegalStateException("Usuário não encontrado para o email: " + email));
 
             Ordem ordem = ordemService.findById(id);
             if (!ordem.getUsuario().getId().equals(usuario.getId())) {
                 throw new IllegalStateException("Você não tem permissão para editar esta ordem");
             }
             model.addAttribute("ordem", ordem);
-            return "ordens/editar";
+            return "ordem/editar";
+
         } catch (Exception e) {
             logger.error("Erro ao carregar ordem para edição: {}", e.getMessage(), e);
             return "ordem/pesquisa";
@@ -131,8 +132,9 @@ public class OrdemController {
             if (!ordem.getUsuario().getId().equals(usuario.getId())) {
                 throw new IllegalStateException("Você não tem permissão para excluir esta ordem");
             }
+
             model.addAttribute("ordem", ordem);
-            return "ordens/excluir";
+            return "ordem/excluir";
         } catch (Exception e) {
             logger.error("Erro ao carregar ordem para exclusão: {}", e.getMessage(), e);
             return "ordem/excluir";

@@ -57,7 +57,7 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(authorizeRequests ->
                 authorizeRequests
-                    .requestMatchers("/", "/auths/login", "/auths/cadastrar", "/css/**", "/img/**", "/js/**").permitAll()
+                    .requestMatchers("/", "/auths/login", "/auths/cadastrar", "/css/**", "/img/**", "/js/**","/bootstrap-5.2.3/**", "/bootstrap-icons-1.13.1/**").permitAll()
                     .requestMatchers("/atendente/**").hasRole("ADMIN")
                     .requestMatchers("/users/**", "/ordens/**").hasAnyRole("USER", "ADMIN")
                     .anyRequest().authenticated()

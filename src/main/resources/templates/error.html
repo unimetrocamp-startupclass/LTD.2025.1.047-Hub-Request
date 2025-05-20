@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Erro</title>
+    <link rel="icon" href="img/icon.png" type="image/x-icon" />
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+    <h1>Ocorreu um erro</h1>
+    <p th:text="${error}">Mensagem de erro</p>
+    <a href="/ordens">Voltar</a>
+</body>
+</html>
