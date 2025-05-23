@@ -116,7 +116,7 @@ Excelente! Aqui está a seção do **cronograma** formatada para o `README.md` n
 ## 7. Resultados
 
 ### 7.1. Tela de Início
-![Tela de Início](img/Home.jpg)
+![Tela de Início](src/main/resources/static/img/home.jpg)
 > Página inicial do sistema com acesso rápido às funcionalidades principais.
 
 ---
