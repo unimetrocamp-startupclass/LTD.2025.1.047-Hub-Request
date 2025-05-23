@@ -128,7 +128,7 @@ Excelente! Aqui está a seção do **cronograma** formatada para o `README.md` n
 ---
 
 ### 7.3. Tela de Abertura de Requisição
-![Tela de Abertura de Requisição](img/tele_abertura_chamado.jpg)
+![Tela de Abertura de Requisição](img/tele abertura chamado.jpg)
 > Formulário para abrir uma nova requisição de serviço.
 
 ---
