@@ -258,7 +258,11 @@ Planejamos implementar as seguintes funcionalidades:
 
 ## 9. Homologação do MVP
 
-> \[Inserir fotos, legendas e lista de presença.]
+Após as entregas parciais realizadas conforme os requisitos do sistema e cronograma, o MVP foi oficialmente apresentado em reunião entre a equipe de desenvolvimento e o cliente no dia 16/05/2025.
+
+### Registro da Homologação
+
+![Sessão de Homologação](src/main/resources/static/img/homologação.jpg) 
 
 ## 10. Divulgação
 
@@ -275,7 +279,7 @@ Planejamos implementar as seguintes funcionalidades:
 ### Seminário de Projetos de Software
 
 ### Vídeo da Apresentação
-[![Thumbnail da apresentação](https://1drv.ms/f/c/bf9808567af8033f/Ek4SZNsHDalBknSdsmVWx7oBpi9ybQzfie759UpPfdfryQ?e=JVGNAl)  
+[![Thumbnail da apresentação](https://via.placeholder.com/800x450?text=Hub+Request+Apresentação)](https://1drv.ms/f/c/bf9808567af8033f/Ek4SZNsHDalBknSdsmVWx7oBpi9ybQzfie759UpPfdfryQ?e=JVGNAl)  
 *Clique na imagem para assistir à apresentação completa (OneDrive)*
 
 ### Registro Fotográfico
