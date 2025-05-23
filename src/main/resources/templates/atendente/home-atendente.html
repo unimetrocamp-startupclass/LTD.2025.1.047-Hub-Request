@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>ReqHub - Home do Usuário</title>
+        <link rel="icon" href="/img/icon.png" type="image/x-icon" />
+        <link rel="stylesheet" href="/css/style.css" />
+    </head>
+    <body>
+        <header>
+            <nav class="navbar navbar-dark bg-dark">
+                <a class="navbar-brand" href="#">
+                    <img src="/img/icon.png" width="50" height="50" class="d-inline-block align-top" style="margin-left: 5vw;" alt="" />
+                    ReqHub
+                </a>
+                <div class="ml-auto">
+                    <a th:href="@{/logout}" class="navbar-brand">
+                        <span class="ml-2" style="font-size: 20px;">Sair</span>
+                    </a>
+                </div>
+            </nav>
+        </header>
+
+        <div class="d-flex justify-content-center mt-5">
+            <h2>ReqHub | Painel do Atendente<span th:text="${username}"></span>!</h2>
+        </div>
+
+        <main>
+            
+
+<section class="container text-center" style="margin-top: 13vh;"> 
+    <div class="row justify-content-center">
+        <div class="col-md-4 mb-4">
+         <h5 class="mb-2">Requisições Pendentes</h5>
+            <img src="/img/team _checklist.png" alt="Abrir Requisição" style="max-width: 350px; height: auto;" />
+            <div class="mt-2">
+                <a th:href="@{/atendente/pendentes}" class="btn btn-primary">Abrir</a>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+        <h5 class="mb-2">Alterações</h5>
+            <img src="/img/edite_all.png" alt="Consultar Requisições" style="max-width: 350px; height: auto;" />
+            <div class="mt-2">
+                <a th:href="@{/ordens/pesquisa}" class="btn btn-primary">Editar</a>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+        <h5 class="mb-2">Central de Requisições</h5>
+            <img src="/img/search.jpg" alt="Buscar Requisições" style="max-width: 350px; height: auto;" />
+            <div class="mt-2">
+                <a th:href="@{/ordens/central}" class="btn btn-primary">Buscar</a>
+            </div>
+        </div>
+    </div>
+</section>
+        </main>
+        <footer class="bg-dark text-white text-center py-3">
+            <p>© 2025 ReqHub. Todos os direitos reservados.</p>
+        </footer>
+    </body>
+</html>

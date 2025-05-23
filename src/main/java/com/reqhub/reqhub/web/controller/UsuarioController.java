@@ -29,17 +29,16 @@ public class UsuarioController {
     @GetMapping("/homeL")
     public String homeL(Authentication authentication, Model model) {
         if (authentication != null && authentication.isAuthenticated()) {
-            String email = authentication.getName(); // Pega o email do usuário autenticado
-            Usuario usuario = usuarioRepository.findByEmail(email); // Retorna Usuario diretamente
-            if (usuario == null) {
-                throw new IllegalStateException("Usuário autenticado não encontrado no banco: " + email);
-            }
-            String nome = usuario.getNome(); // Pega o nome do usuário
-            model.addAttribute("username", nome); // Passa o nome pro modelo
+            String email = authentication.getName();
+            Usuario usuario = usuarioRepository.findByEmail(email)
+                    .orElseThrow(() -> new IllegalStateException("Usuário autenticado não encontrado no banco: " + email));
+            String nome = usuario.getNome();
+            model.addAttribute("username", nome);
             System.out.println("Usuário logado - Email: " + email + ", Nome: " + nome);
         }
-        return "user/homeL"; // Aponta pra templates/user/homeL.html
+        return "user/homeL";
     }
+
 
     @PostMapping("/cadastrar")
     public String cadastrarUsuario(@ModelAttribute Usuario usuario, @RequestParam("setorId") Long setorId) {

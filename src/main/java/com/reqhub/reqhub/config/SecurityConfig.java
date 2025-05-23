@@ -1,5 +1,8 @@
 package com.reqhub.reqhub.config;
 
+import com.reqhub.reqhub.repository.AuthorityRepository; // Importe esta classe
+import com.reqhub.reqhub.repository.UsuarioRepository;
+import com.reqhub.reqhub.security.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,17 +16,16 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import com.reqhub.reqhub.repository.UsuarioRepository;
-import com.reqhub.reqhub.security.CustomUserDetailsService;
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
     private final UsuarioRepository usuarioRepository;
+    private final AuthorityRepository authorityRepository; // Declare o AuthorityRepository
 
-    public SecurityConfig(UsuarioRepository usuarioRepository) {
+    public SecurityConfig(UsuarioRepository usuarioRepository, AuthorityRepository authorityRepository) { // Modifique o construtor
         this.usuarioRepository = usuarioRepository;
+        this.authorityRepository = authorityRepository;
     }
 
     @Bean
@@ -33,7 +35,7 @@ public class SecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return new CustomUserDetailsService(usuarioRepository, passwordEncoder());
+        return new CustomUserDetailsService(usuarioRepository, passwordEncoder(), authorityRepository); // Passe o authorityRepository
     }
 
     @Bean
@@ -53,33 +55,40 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .csrf(csrf -> csrf.disable())
-            .authorizeHttpRequests(authorizeRequests -> 
+            .authorizeHttpRequests(authorizeRequests ->
                 authorizeRequests
-                    .requestMatchers("/", "/auths/cadastrar", "/css/**", "/img/**", "/js/**").permitAll()
-                    .requestMatchers("/users/**", "/ordens/**").hasAnyRole("USER", "ADMIN") // Alterado pra USER e ADMIN
-                    .requestMatchers("/authorities/**").hasRole("ADMIN")
-                    .requestMatchers("/").hasAnyRole("USER", "ADMIN")
+                    .requestMatchers("/", "/auths/login", "/auths/cadastrar", "/css/**", "/img/**", "/js/**","/bootstrap-5.2.3/**", "/bootstrap-icons-1.13.1/**").permitAll()
+                    .requestMatchers("/atendente/**").hasRole("ADMIN")
+                    .requestMatchers("/users/**", "/ordens/**").hasAnyRole("USER", "ADMIN")
                     .anyRequest().authenticated()
             )
-            .formLogin(form -> 
+            .formLogin(form ->
                 form
                     .loginPage("/auths/login")
                     .loginProcessingUrl("/auths/login")
-                    .defaultSuccessUrl("/users/homeL", true)
+                    .successHandler((request, response, authentication) -> {
+                        boolean isAdmin = authentication.getAuthorities().stream()
+                            .anyMatch(auth -> auth.getAuthority().equals("ROLE_ADMIN"));
+
+                        if (isAdmin) {
+                            response.sendRedirect("/atendente/home-atendente");
+                        } else {
+                            response.sendRedirect("/users/homeL");
+                        }
+                    })
                     .failureUrl("/auths/login?error")
                     .permitAll()
             )
-            .logout(logout -> 
+            .logout(logout ->
                 logout
                     .logoutUrl("/logout")
                     .logoutSuccessUrl("/auths/login?logout")
                     .permitAll()
             )
-            .exceptionHandling(exception -> 
+            .exceptionHandling(exception ->
                 exception
                     .accessDeniedPage("/access-denied")
             );
-            // Removido .authenticationProvider(authenticationProvider()) pois o Spring já usa o @Bean automaticamente
 
         return http.build();
     }

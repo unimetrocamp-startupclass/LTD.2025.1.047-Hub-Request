@@ -1,0 +1,5 @@
+@apiurl = http:localhost:5001/setores
+
+####
+
+GET {{apiurl}}/cadastrar

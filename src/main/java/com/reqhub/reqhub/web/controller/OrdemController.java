@@ -39,8 +39,8 @@ public class OrdemController {
         logger.info("Recebido POST para /ordens/comentario: {}", ordemRequest);
         try {
             String email = authentication.getName();
-            Usuario usuario = usuarioRepository.findByEmail(email);
-            if (usuario == null) throw new IllegalStateException("Usuário autenticado não encontrado: " + email);
+            Usuario usuario = usuarioRepository.findByEmail(email) // Modificado para Optional
+                    .orElseThrow(() -> new IllegalStateException("Usuário autenticado não encontrado: " + email));
 
             Ordem ordem = new Ordem();
             ordem.setUsuario(usuario);
@@ -65,8 +65,8 @@ public class OrdemController {
         logger.info("Listando ordens do usuário autenticado");
         try {
             String email = authentication.getName();
-            Usuario usuario = usuarioRepository.findByEmail(email);
-            if (usuario == null) throw new IllegalStateException("Usuário autenticado não encontrado: " + email);
+            Usuario usuario = usuarioRepository.findByEmail(email)  // Modificado para Optional
+                    .orElseThrow(() -> new IllegalStateException("Usuário autenticado não encontrado: " + email));
             List<Ordem> ordens = ordemService.buscarOrdensPorUsuario(usuario);
             return ResponseEntity.ok(ordens);
         } catch (Exception e) {
@@ -80,15 +80,16 @@ public class OrdemController {
         logger.info("Acessando página de edição da ordem: {}", id);
         try {
             String email = authentication.getName();
-            Usuario usuario = usuarioRepository.findByEmail(email);
-            if (usuario == null) throw new IllegalStateException("Usuário autenticado não encontrado: " + email);
+            Usuario usuario = usuarioRepository.findByEmail(email)
+                    .orElseThrow(() -> new IllegalStateException("Usuário não encontrado para o email: " + email));
 
             Ordem ordem = ordemService.findById(id);
             if (!ordem.getUsuario().getId().equals(usuario.getId())) {
                 throw new IllegalStateException("Você não tem permissão para editar esta ordem");
             }
             model.addAttribute("ordem", ordem);
-            return "ordens/editar";
+            return "ordem/editar";
+
         } catch (Exception e) {
             logger.error("Erro ao carregar ordem para edição: {}", e.getMessage(), e);
             return "ordem/pesquisa";
@@ -101,8 +102,8 @@ public class OrdemController {
         logger.info("Salvando edição da ordem: {}", id);
         try {
             String email = authentication.getName();
-            Usuario usuario = usuarioRepository.findByEmail(email);
-            if (usuario == null) throw new IllegalStateException("Usuário autenticado não encontrado: " + email);
+            Usuario usuario = usuarioRepository.findByEmail(email)  // Modificado para Optional
+                    .orElseThrow(() -> new IllegalStateException("Usuário autenticado não encontrado: " + email));
 
             Ordem ordem = ordemService.findById(id);
             if (!ordem.getUsuario().getId().equals(usuario.getId())) {
@@ -124,15 +125,16 @@ public class OrdemController {
         logger.info("Acessando página de confirmação de exclusão da ordem: {}", id);
         try {
             String email = authentication.getName();
-            Usuario usuario = usuarioRepository.findByEmail(email);
-            if (usuario == null) throw new IllegalStateException("Usuário autenticado não encontrado: " + email);
+            Usuario usuario = usuarioRepository.findByEmail(email)  // Modificado para Optional
+                    .orElseThrow(() -> new IllegalStateException("Usuário autenticado não encontrado: " + email));
 
             Ordem ordem = ordemService.findById(id);
             if (!ordem.getUsuario().getId().equals(usuario.getId())) {
                 throw new IllegalStateException("Você não tem permissão para excluir esta ordem");
             }
+
             model.addAttribute("ordem", ordem);
-            return "ordens/excluir";
+            return "ordem/excluir";
         } catch (Exception e) {
             logger.error("Erro ao carregar ordem para exclusão: {}", e.getMessage(), e);
             return "ordem/excluir";
@@ -145,8 +147,8 @@ public class OrdemController {
         logger.info("Excluindo ordem: {}", ordemId.getId());
         try {
             String email = authentication.getName();
-            Usuario usuario = usuarioRepository.findByEmail(email);
-            if (usuario == null) throw new IllegalStateException("Usuário autenticado não encontrado: " + email);
+            Usuario usuario = usuarioRepository.findByEmail(email)  // Modificado para Optional
+                    .orElseThrow(() -> new IllegalStateException("Usuário autenticado não encontrado: " + email));
 
             Ordem ordem = ordemService.findById(ordemId.getId());
             if (!ordem.getUsuario().getId().equals(usuario.getId())) {
@@ -175,17 +177,17 @@ public class OrdemController {
         logger.info("Listando central de requisições");
         try {
             String email = authentication.getName();
-            Usuario usuario = usuarioRepository.findByEmail(email);
-            if (usuario == null) throw new IllegalStateException("Usuário autenticado não encontrado: " + email);
+            Usuario usuario = usuarioRepository.findByEmail(email)  // Modificado para Optional
+                    .orElseThrow(() -> new IllegalStateException("Usuário autenticado não encontrado: " + email));
             List<Ordem> ordens = ordemService.buscarTodasOrdens();
             List<OrdemDTO> ordensDTO = ordens.stream()
-                .map(ordem -> new OrdemDTO(
-                    ordem.getAssunto(),
-                    ordem.getDescricao(),
-                    ordem.getSolucao(),
-                    ordem.getAtendente() != null ? ordem.getAtendente().getUsuario().getNome() : null
-                ))
-                .collect(Collectors.toList());
+                    .map(ordem -> new OrdemDTO(
+                            ordem.getAssunto(),
+                            ordem.getDescricao(),
+                            ordem.getSolucao(),
+                            ordem.getAtendente() != null ? ordem.getAtendente().getUsuario().getNome() : null
+                    ))
+                    .collect(Collectors.toList());
             return ResponseEntity.ok(ordensDTO);
         } catch (Exception e) {
             logger.error("Erro ao listar central: {}", e.getMessage(), e);
