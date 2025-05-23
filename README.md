@@ -358,11 +358,11 @@ Após as entregas parciais realizadas conforme os requisitos do sistema e cronog
 
 ## 11. Carta de Apresentação
 
-📑 [Visualizar Carta Completa](https://1drv.ms/b/c/bf9808567af8033f/EYiTdA4hiKJIrXAddfVDFhkBQAeRlHB-N6juE3JfdR9aXw?e=puAjFA){:target="_blank"} 
+📑 [Visualizar Carta Completa](https://1drv.ms/b/c/bf9808567af8033f/EYiTdA4hiKJIrXAddfVDFhkBQAeRlHB-N6juE3JfdR9aXw?e=puAjFA)
 
 ## 12. Carta de Autorização
 
-📄 [Visualizar Carta de Autorização completa](https://1drv.ms/b/c/bf9808567af8033f/EZzWvuEdku5MoOD5EIUODE0BUbPz7naGnyGIFPSo-T5FiQ?e=Vkh0Xq){:target="_blank"}  
+📄 [Visualizar Carta de Autorização completa](https://1drv.ms/b/c/bf9808567af8033f/EZzWvuEdku5MoOD5EIUODE0BUbPz7naGnyGIFPSo-T5FiQ?e=Vkh0Xq) 
 
 ## 13. Relato Individual do Processo
 
