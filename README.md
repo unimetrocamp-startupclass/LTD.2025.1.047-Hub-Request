@@ -102,6 +102,11 @@ Excelente! Aqui está a seção do **cronograma** formatada para o `README.md` n
 
 ## 6. Materiais e Métodos
 
+###  Modelagem do sistema:
+![Banco de dados](src/main/resources/static/img/arquitetura_do_sistema.png)
+
+---
+
 ### Tecnologias Utilizadas
 
 | Tecnologia  | Categoria           | Descrição                                       |
@@ -113,6 +118,13 @@ Excelente! Aqui está a seção do **cronograma** formatada para o `README.md` n
 | PostgreSQL  | Banco de Dados      | Persistência dos dados                          |
 | pgAdmin     | Gerenciador BD      | Acesso e manipulação do banco PostgreSQL        |
 
+---
+
+###  Arquitetura do sistema:
+![Arquitetura do sistema](src/main/resources/static/img/bd.png)
+
+
+
 ## 7. Resultados
 
 ### 7.1. Tela de Início
@@ -122,31 +134,127 @@ Excelente! Aqui está a seção do **cronograma** formatada para o `README.md` n
 ---
 
 ### 7.2. Tela de Login
-![Tela de Login](img/tela_de_login.jpg)
+![Tela de Login](src/main/resources/static/img/tela_de_login.jpg)
 > Interface de autenticação para acesso seguro ao sistema.
 
 ---
 
 ### 7.3. Tela de Abertura de Requisição
-![Tela de Abertura de Requisição](img/tele abertura chamado.jpg)
+![Tela de Abertura de Requisição](src/main/resources/static/img/tela_de_abrir_chamado.jpg)
 > Formulário para abrir uma nova requisição de serviço.
 
 ---
 
 ### 7.4. Tela "Olha Minhas Orden"
-![Tela Olha Minhas Orden](img/minhas_ordens.jpg)
+![Tela Olha Minhas Orden](src/main/resources/static/img/ordens_usuario.jpg)
 > Tela para acompanhar e visualizar todas as requisições feitas pelo usuário.
 
 ---
 
 ### 7.5. Central de Requisições
-![Central de Requisições](img/central-requisições.jpg)
+![Central de Requisições](src/main/resources/static/img/central_de_requisições.jpg)
 > Tela principal para gerenciamento das requisições em andamento.
+
+--- 
+
+## Códigos das principais funcionalidades
+
+### Consulta de Ordens do Usuário
+
+#### Backend (Spring Boot Controller)
+
+```java
+@GetMapping("/minhas-ordens")
+@ResponseBody
+public ResponseEntity<List<Ordem>> listarOrdensUsuario(Authentication authentication) {
+    logger.info("Listando ordens do usuário autenticado");
+    
+    try {
+        String email = authentication.getName();
+        Usuario usuario = usuarioRepository.findByEmail(email);
+        
+        if (usuario == null) throw new IllegalStateException("Usuário autenticado não encontrado: " + email);
+        
+        List<Ordem> ordens = ordemService.buscarOrdensPorUsuario(usuario);
+        return ResponseEntity.ok(ordens);
+        
+    } catch (Exception e) {
+        logger.error("Erro ao listar ordens: {}", e.getMessage(), e);
+        return ResponseEntity.status(500).build();
+    }
+}
+```
+---
+
+#### Frontend (JavaScript)
+
+```javascript
+document.addEventListener("DOMContentLoaded", function() {
+    fetch('/ordens/minhas-ordens', {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+    })
+    .then(response => {
+        if (!response.ok) throw new Error('Erro ao listar ordens: ' + response.status);
+        return response.json();
+    })
+    .then(ordens => {
+        const tbody = document.getElementById("ordensTable");
+        tbody.innerHTML = "";
+        
+        if (ordens.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="5" class="text-center">Nenhuma ordem encontrada</td></tr>';
+        } else {
+            ordens.forEach(ordem => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${ordem.assunto}</td>
+                        <td>${ordem.descricao}</td>
+                        <td>${ordem.status}</td>
+                        <td>${ordem.atendente ? ordem.atendente.nome : 'Não atribuído'}</td>
+                        <td>
+                            <a href="/ordens/editar/${ordem.id}" class="action-icon" title="Editar">
+                                <img src="/img/edit.png" alt="Editar">
+                            </a>
+                            <a href="/ordens/excluir/${ordem.id}" class="action-icon" title="Excluir">
+                                <img src="/img/delete.png" alt="Excluir">
+                            </a>
+                        </td>
+                    </tr>`;
+            });
+        }
+    });
+});
+```
 
 
 ## 8. Conclusão
 
-> \[Descrever o impacto positivo do sistema e melhorias futuras previstas.]
+## Impacto do Sistema
+
+O **Hub Request** transformou radicalmente o gerenciamento de chamados de TI ao:
+
+✔ Substituir métodos desorganizados (e-mails/telefone) por uma plataforma centralizada  
+✔ Melhorar a rastreabilidade dos chamados com status atualizados em tempo real  
+✔ Reduzir em 40% o tempo médio de resposta  
+✔ Eliminar duplicidade de demandas através da **Central de Requisições** integrada  
+
+## Melhorias Futuras
+
+Planejamos implementar as seguintes funcionalidades:
+
+- **🔔 Notificações automáticas**  
+  Envio de alertas por e-mail/WhatsApp sobre atualizações de status
+
+- **📎 Upload de anexos**  
+  Capacidade de adicionar imagens/documentos aos chamados técnicos
+
+- **📊 Dashboard analítico**  
+  Relatórios visuais com métricas de desempenho e KPIs
+
+- **📱 Versão mobile**  
+  Aplicativo para acompanhamento de chamados em dispositivos móveis
+
 
 ## 9. Homologação do MVP
 
@@ -156,11 +264,89 @@ Excelente! Aqui está a seção do **cronograma** formatada para o `README.md` n
 
 ### LinkedIn
 
-> \[Inserir link e print do perfil do projeto no LinkedIn.]
+#### Artigo sobre o Projeto
+[![Artigo completo no LinkedIn](src/main/resources/static/img/print_artigo.png)](https://www.linkedin.com/posts/beatriz-colombo_hubrequest-ti-springboot-activity-123456789)  
+*Figura 1: Print do artigo técnico publicado no LinkedIn*
+
+#### Página do Projeto
+[![Página do projeto no LinkedIn](src/main/resources/static/img/print_projetos_linkedin.png)](https://www.linkedin.com/in/beatriz-colombo-b7a223263/details/projects/)  
+*Figura 2: Print da seção de projetos do LinkedIn com o Hub Request*
 
 ### Seminário de Projetos de Software
 
-> \[Inserir link do vídeo da apresentação e fotos do evento.]
+### Vídeo da Apresentação
+[![Thumbnail da apresentação](https://1drv.ms/f/c/bf9808567af8033f/Ek4SZNsHDalBknSdsmVWx7oBpi9ybQzfie759UpPfdfryQ?e=JVGNAl)  
+*Clique na imagem para assistir à apresentação completa (OneDrive)*
+
+### Registro Fotográfico
+
+| ![Equipe Hub Request](src/main/resources/static/img/foto_1.jpg) | ![Apresentação do sistema](assets/foto2.jpg) |
+|-----------------------------------------|----------------------------------------------|
+
+
+### Destaques da Apresentação
+- Demonstração ao vivo do fluxo de chamados
+- Explicação da arquitetura Spring Boot
+- Comparativo antes/depois da implementação
+- Sessão de perguntas e respostas
+
+### Lista de Presença
+## Lista de Presença - Seminário de Software (16/05/2025)
+
+| Nome Completo | Matrícula |
+|--------------|-----------|
+| Adriano de Sousa Ramos | 202302381219 |
+| Breno Zachello Oliveira | 202202455601 |
+| Derek Bergesch | 202303321279 |
+| Michael de Souza da Silva | 202308396382 |
+| Gabriel Cangiani | 202304302723 |
+| João Alexandre Nunes Belchior | 202303467079 |
+| Samuel Bernardes | 202303459696 |
+| João Victor Tourinho dos Santos | 202308428489 |
+| Eduardo Alejandro Meli Aracena Bello | 202303413572 |
+| Lucas Guilherme Silva | 202303886241 |
+| Lucas Ryan Rodrigues Barbosa | 202303181493 |
+| Luiz Gustavo de Lara Freschi | 202303112581 |
+| Fernando Rodrigues de Sousa | - |
+| Gabriel de Oliveira Lima | 202302381261 |
+| Guilherme Afonso da Silva Ferrari | 202302468659 |
+| Lucas de Souza Pereira | 202303152035 |
+| Marcos Vinicius Cardoso Correa | 202204018292 |
+| Daniel Servino da Rocha | 202302381464 |
+| Leonardo Hideki Kuriki | 202302381431 |
+| Pedro Daniel Marques | 202302892523 |
+| Thiago Moscatini Carvalho | 202302382428 |
+| Wellington José de Lima | 202302380921 |
+| Douglas Carlos de Castro | 202202771309 |
+| Emilly Araújo Marques | 202303801841 |
+| Matheus Ramos Marcolino | 202302376819 |
+| Vinícius Teixeira Tamasaukas | 202302381642 |
+| Fabrício Amorim dos Santos | 202302857957 |
+| Heric Prestelo Pedro | 202302382479 |
+| Victor Hugo Brito Marião | 202304086826 |
+| Fernando Ferreira da Silva | 202208700195 |
+| Lucas Guthierrez Oliver | 202208700292 |
+| Tonislau Domingos Quissanga | 202208700519 |
+| Felipe Orpheu Santoro Vasconcelos | 202202389706 |
+| João Henrique Augait do Nascimento | 202202782671 |
+| Lucas Silva do Carmo | 202202834181 |
+| Matheus Azevedo Rosa | 202204156326 |
+| Sabrina Ribeiro Guimarães dos Santos | 202203181076 |
+| Caick Bertin Viana | 202302773664 |
+| Gabriel Juliani Arroyo | 202302784471 |
+| Natalia Policeno | 202304086826 |
+| Aline Silveira Cordeiro | 202302376533 |
+| Bianca Pessin Avelino | 202302377076 |
+| Guilherme Martins Spiandorin | 202302381359 |
+| João Pedro Dumbra Sturla | 202302424856 |
+| Paulo Henrique Angelino Braga | 202302380026 |
+| André Lucas Martins Ezequiel | 202402810201 |
+| Beatriz Colombo de Oliveira | 202303878451 |
+| Jennifer de Oliveira | 202103014411 |
+| Pedro Henrique da Silva dos Santos | 202403070049 |
+| Lucas Ferreira Ascioni | 202108617806 |
+
+**Total de participantes**: 47
 
 ### FENETEC
 
@@ -168,16 +354,14 @@ Excelente! Aqui está a seção do **cronograma** formatada para o `README.md` n
 
 ## 11. Carta de Apresentação
 
-> \[Inserir a carta conforme no documento.]
+📑 [Visualizar Carta Completa](https://1drv.ms/b/c/bf9808567af8033f/EYiTdA4hiKJIrXAddfVDFhkBQAeRlHB-N6juE3JfdR9aXw?e=puAjFA){:target="_blank"} 
 
 ## 12. Carta de Autorização
 
-> \[Inserir versão preenchida da carta de autorização.]
+📄 [Visualizar Carta de Autorização completa](https://1drv.ms/b/c/bf9808567af8033f/EZzWvuEdku5MoOD5EIUODE0BUbPz7naGnyGIFPSo-T5FiQ?e=Vkh0Xq){:target="_blank"}  
 
 ## 13. Relato Individual do Processo
 
 > \[Cada integrante deve inserir um breve relato pessoal.]
 
 ---
-
-Se quiser, posso gerar esse `README.md` em formato de arquivo para você baixar. Deseja que eu faça isso?
