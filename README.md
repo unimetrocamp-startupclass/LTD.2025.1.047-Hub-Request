@@ -115,7 +115,34 @@ Excelente! Aqui está a seção do **cronograma** formatada para o `README.md` n
 
 ## 7. Resultados
 
-> \[Inserir imagens das telas e seções do código com explicações.]
+### 7.1. Tela de Início
+![Tela de Início](img/Home.jpg)
+> Página inicial do sistema com acesso rápido às funcionalidades principais.
+
+---
+
+### 7.2. Tela de Login
+![Tela de Login](img/tela_de_login.jpg)
+> Interface de autenticação para acesso seguro ao sistema.
+
+---
+
+### 7.3. Tela de Abertura de Requisição
+![Tela de Abertura de Requisição](img/tele_abertura_chamado.jpg)
+> Formulário para abrir uma nova requisição de serviço.
+
+---
+
+### 7.4. Tela "Olha Minhas Orden"
+![Tela Olha Minhas Orden](img/minhas_ordens.jpg)
+> Tela para acompanhar e visualizar todas as requisições feitas pelo usuário.
+
+---
+
+### 7.5. Central de Requisições
+![Central de Requisições](img/central-requisições.jpg)
+> Tela principal para gerenciamento das requisições em andamento.
+
 
 ## 8. Conclusão
 
