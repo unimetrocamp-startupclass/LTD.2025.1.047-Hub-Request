@@ -366,6 +366,35 @@ Após as entregas parciais realizadas conforme os requisitos do sistema e cronog
 
 ## 13. Relato Individual do Processo
 
-> \[Cada integrante deve inserir um breve relato pessoal.]
+## Nome: Jennifer de Oliveira  
+**Título do Projeto:** HubRequest – Sistema de Help Desk para TI  
+
+**Relato pessoal:**  
+Participar do desenvolvimento do HubRequest foi uma experiência transformadora e de muito aprendizado. Atuei como Product Owner, Scrum Master e também como desenvolvedora, o que me permitiu ter uma visão completa do ciclo de vida do projeto. Utilizamos o Jira para organizar todas as etapas, desde a coleta de requisitos até a entrega do MVP, sempre seguindo os ritos ágeis como planning, dailies, reviews e retrospectivas. A interação com o cliente real foi essencial para ajustar o sistema às reais necessidades do setor de TI, o que nos desafiou a propor soluções práticas e funcionais. Ter a oportunidade de contribuir em múltiplos papéis me proporcionou crescimento técnico e interpessoal, reforçando minha paixão por projetos que aliam tecnologia e impacto direto no dia a dia das empresas.
+
+---
+
+## Nome: André Lucas  
+**Título do Projeto:** HubRequest – Sistema de Help Desk para TI  
+
+**Relato pessoal:**  
+Participar do projeto HubRequest foi uma experiência desafiadora e muito gratificante. Atuei como Product Owner, Scrum Master e desenvolvedor, me aprofundando ainda mais na parte técnica, que é uma área que gosto muito. Durante o desenvolvimento, pude aplicar meus conhecimentos em banco de dados, back-end e arquitetura da aplicação para garantir que o sistema tivesse uma estrutura sólida e funcional. Utilizamos o Jira para organização e seguimos os ritos do Scrum com seriedade. Trabalhar em um projeto real, com entregas práticas e demandas específicas de um cliente, me motivou a buscar soluções eficientes e colaborativas junto à equipe. Essa vivência reforçou a importância da comunicação, da organização e da responsabilidade técnica no sucesso de um software.
+
+---
+
+## Nome: Beatriz Colombo  
+**Título do Projeto:** HubRequest – Sistema de Help Desk para TI  
+
+**Relato pessoal:**  
+O HubRequest nasceu de uma ideia que desenvolvi pensando em como otimizar processos de TI com uma solução prática e funcional. Foi incrível ver essa ideia se transformar em um sistema real, construído com esforço coletivo. Durante o projeto, assumi diferentes papéis: fui Product Owner, Scrum Master e desenvolvedora, sempre mantendo o foco na visão do produto e no impacto que ele poderia causar. Acompanhei todas as etapas com dedicação, ajudando a orientar a equipe e contribuindo com decisões estratégicas. Utilizamos o Jira para gerenciar o projeto e seguimos os ritos ágeis com comprometimento. Ter liderado esse processo, desde a concepção até a construção do MVP, foi uma das experiências mais completas e marcantes que já vivi na faculdade.
+
+---
+
+## Nome: Pedro Henrique  
+**Título do Projeto:** HubRequest – Sistema de Help Desk para TI  
+
+**Relato pessoal:**  
+Estar envolvido no projeto HubRequest foi uma jornada de muito aprendizado e colaboração. Atuei como Product Owner, Scrum Master e desenvolvedor, participando ativamente de todas as fases do projeto, desde a definição de requisitos até a entrega do MVP. Trabalhar em equipe com metodologia ágil, utilizando o Jira para acompanhamento das sprints e tarefas, me ensinou a importância da organização e do trabalho estruturado. Pude contribuir em diversas áreas do desenvolvimento, sempre buscando alinhar as necessidades do cliente com soluções práticas e eficientes. O projeto me fez evoluir tanto tecnicamente quanto em postura profissional, e tenho muito orgulho do resultado que construímos juntos.
+
 
 ---
